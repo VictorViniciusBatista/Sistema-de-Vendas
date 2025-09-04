@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2025/09/03 13:20:25.000.463,=C:\Users\Ti\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/09/03 13:52:39.000.966,=C:\Users\Ti\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/09/03 13:54:17.000.370,=C:\Users\Ti\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/09/03 13:57:33.000.706,=C:\Users\Ti\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/09/03 14:12:12.000.566,=C:\Users\Ti\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/09/03 14:23:44.000.701,C:\Users\Ti\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\src\view\uPrincipal.dfm</Transaction>
+    <Transaction>2025/09/03 14:23:44.000.701,C:\Users\Ti\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\src\view\uPrincipal.pas</Transaction>
+    <Transaction>2025/09/03 14:24:14.000.199,C:\Users\Ti\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\Vendas.dproj</Transaction>
+    <Transaction>2025/09/03 14:44:39.000.929,=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\Unit1.pas</Transaction>
+    <Transaction>2025/09/03 14:45:03.000.792,C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\Unit1.pas=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\src\modules\uDM.pas</Transaction>
+    <Transaction>2025/09/03 14:45:03.000.792,C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\Unit1.dfm=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\src\modules\uDM.dfm</Transaction>
+    <Transaction>2025/09/03 15:05:56.000.260,=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\Unit1.pas</Transaction>
+    <Transaction>2025/09/03 15:06:43.000.328,C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\Unit1.pas=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\src\modules\uTelaHeranca.pas</Transaction>
+    <Transaction>2025/09/03 15:06:43.000.328,C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\Unit1.dfm=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\src\modules\uTelaHeranca.dfm</Transaction>
+    <Transaction>2025/09/04 10:41:33.000.238,=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\Unit1.pas</Transaction>
+    <Transaction>2025/09/04 10:43:05.000.532,C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\src\view\uCadCategoria.pas=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\Unit1.pas</Transaction>
+    <Transaction>2025/09/04 10:43:05.000.532,C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\src\view\uCadCategoria.dfm=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\Unit1.dfm</Transaction>
+    <Transaction>2025/09/04 13:22:41.000.493,=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\Unit1.pas</Transaction>
+    <Transaction>2025/09/04 13:23:39.000.708,C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\src\modules\uEnum.pas=C:\Users\Ti\Desktop\Programas\Delphi - Udemy\Curso - Curso Desenvolver sistema em Delphi\Pasta Victor\sistemaVendas\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

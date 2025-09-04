@@ -1,0 +1,23 @@
+object DM: TDM
+  Height = 750
+  Width = 1000
+  PixelsPerInch = 120
+  object QU: TADOQuery
+    Connection = conexao
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      '')
+    Left = 168
+    Top = 80
+  end
+  object conexao: TADOConnection
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Password=sql;Persist Security Info=True;User' +
+      ' ID=sa;Initial Catalog=vendasUdemy;Data Source=DESKTOP-HF2375H\S' +
+      'QLEXPRESS'
+    Provider = 'SQLOLEDB.1'
+    Left = 80
+    Top = 80
+  end
+end

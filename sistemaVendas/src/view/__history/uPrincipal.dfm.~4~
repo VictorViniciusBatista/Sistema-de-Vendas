@@ -1,0 +1,64 @@
+object fPrincipal: TfPrincipal
+  Left = 0
+  Top = 0
+  Caption = 'Menu Principal'
+  ClientHeight = 658
+  ClientWidth = 1046
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  Menu = MainMenu1
+  TextHeight = 15
+  object MainMenu1: TMainMenu
+    Left = 896
+    Top = 72
+    object Cadastro1: TMenuItem
+      Caption = 'Cadastro'
+      object Cliente1: TMenuItem
+        Caption = 'Cliente'
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object N2: TMenuItem
+        Caption = 'Categoria'
+      end
+      object Produto1: TMenuItem
+        Caption = 'Produto'
+      end
+      object Produto2: TMenuItem
+        Caption = '-'
+      end
+      object Fechar1: TMenuItem
+        Caption = 'Fechar'
+      end
+    end
+    object Movimentao1: TMenuItem
+      Caption = 'Movimenta'#231#227'o'
+      object Vendas1: TMenuItem
+        Caption = 'Vendas'
+      end
+    end
+    object Movimentao2: TMenuItem
+      Caption = 'Relat'#243'rios'
+      object Cliente2: TMenuItem
+        Caption = 'Cliente'
+      end
+      object Cliente3: TMenuItem
+        Caption = '-'
+      end
+      object Produto3: TMenuItem
+        Caption = 'Produto'
+      end
+      object N3: TMenuItem
+        Caption = '-'
+      end
+      object Vendapordata1: TMenuItem
+        Caption = 'Venda por data'
+      end
+    end
+  end
+end

@@ -1,0 +1,185 @@
+inherited fCadCategoria: TfCadCategoria
+  Caption = 'Cadastro de Categorias'
+  ClientHeight = 675
+  ClientWidth = 1170
+  StyleElements = [seFont, seClient, seBorder]
+  OnShow = FormShow
+  ExplicitWidth = 1170
+  ExplicitHeight = 675
+  TextHeight = 15
+  inherited pnlBotoes: TPanel
+    Top = 576
+    Width = 1170
+    Height = 99
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitTop = 576
+    ExplicitWidth = 1170
+    ExplicitHeight = 99
+    inherited btnNavigator: TDBNavigator
+      Height = 99
+      DataSource = DataSource1
+      Hints.Strings = ()
+      ExplicitLeft = 592
+      ExplicitTop = 2
+    end
+    inherited pnlNovo: TPanel
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+      inherited btnNovo: TSpeedButton
+        Height = 99
+      end
+    end
+    inherited pnlEspaco: TPanel
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlAlterar: TPanel
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+      inherited btnAlterar: TSpeedButton
+        Height = 99
+      end
+    end
+    inherited pnlEspaco2: TPanel
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlCancelar: TPanel
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+      inherited btnCancelar: TSpeedButton
+        Height = 99
+      end
+    end
+    inherited pnlEspaco3: TPanel
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlGravar: TPanel
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+      inherited btnGravar: TSpeedButton
+        Height = 99
+      end
+    end
+    inherited pnlEspaco4: TPanel
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlApagar: TPanel
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+      inherited btnApagar: TSpeedButton
+        Height = 99
+      end
+    end
+    inherited pnlEspaco5: TPanel
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlEspaco6: TPanel
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlEspaco7: TPanel
+      Left = 1166
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitLeft = 1166
+    end
+    inherited pnlFechar: TPanel
+      Left = 1051
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitLeft = 1051
+      inherited btnFechar: TSpeedButton
+        Height = 99
+        ExplicitLeft = 6
+        ExplicitTop = 2
+        ExplicitWidth = 115
+        ExplicitHeight = 90
+      end
+    end
+    inherited pnlEspaco8: TPanel
+      Left = 1046
+      Height = 99
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitLeft = 1046
+    end
+  end
+  inherited pgPrincipal: TPageControl
+    Width = 1170
+    Height = 576
+    ExplicitWidth = 1170
+    ExplicitHeight = 585
+    inherited tabListagem: TTabSheet
+      ExplicitWidth = 1162
+      ExplicitHeight = 546
+      inherited pnlBotoesListagem: TPanel
+        Width = 1162
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitTop = -6
+        ExplicitWidth = 1162
+        inherited pnlEspaco9: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          ExplicitLeft = 1
+        end
+        inherited pnlPesquisar: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited lblIndice: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited edtPesquisar: TMaskEdit
+            Left = 18
+            StyleElements = [seFont, seClient, seBorder]
+            ExplicitLeft = 18
+          end
+          inherited pnlPesquisarr: TPanel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
+      end
+      inherited dbgListagem: TDBGrid
+        Width = 1162
+        Height = 445
+        DataSource = DataSource1
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+        OnTitleClick = dbgListagemTitleClick
+      end
+      object StatusBar1: TStatusBar
+        Left = 0
+        Top = 518
+        Width = 1162
+        Height = 28
+        Panels = <
+          item
+            BiDiMode = bdLeftToRight
+            ParentBiDiMode = False
+            Text = 'Total Equipamentos'
+            Width = 150
+          end
+          item
+            Width = 50
+          end
+          item
+            Width = 50
+          end>
+      end
+    end
+    inherited tabManutencao: TTabSheet
+      ExplicitWidth = 1162
+      ExplicitHeight = 546
+    end
+  end
+  object adoCategoria: TADOQuery
+    Connection = DM.conexao
+    Parameters = <>
+    Left = 712
+    Top = 40
+  end
+  object DataSource1: TDataSource
+    DataSet = adoCategoria
+    Left = 792
+    Top = 40
+  end
+end

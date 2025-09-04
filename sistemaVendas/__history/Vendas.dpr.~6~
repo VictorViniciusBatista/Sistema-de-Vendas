@@ -1,0 +1,20 @@
+program Vendas;
+
+uses
+  Vcl.Forms,
+  uPrincipal in 'src\view\uPrincipal.pas' {fPrincipal},
+  uDM in 'src\modules\uDM.pas' {DataModule1: TDataModule},
+  uTelaHeranca in 'src\modules\uTelaHeranca.pas' {fTelaHeranca},
+  uCadCategoria in 'src\view\uCadCategoria.pas' {fCadCategoria};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfPrincipal, fPrincipal);
+  Application.CreateForm(TDataModule1, DataModule1);
+  Application.CreateForm(TfTelaHeranca, fTelaHeranca);
+  Application.CreateForm(TfCadCategoria, fCadCategoria);
+  Application.Run;
+end.

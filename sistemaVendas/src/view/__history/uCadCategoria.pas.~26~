@@ -1,0 +1,66 @@
+unit uCadCategoria;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, Data.Win.ADODB,
+  System.Actions, Vcl.ActnList, System.ImageList, Vcl.ImgList, Vcl.Grids,
+  Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.Buttons, Vcl.DBCtrls,
+  Vcl.ExtCtrls;
+
+type
+  TfCadCategoria = class(TfTelaHeranca)
+    adoCategoria: TADOQuery;
+    DataSource1: TDataSource;
+    StatusBar1: TStatusBar;
+    procedure FormShow(Sender: TObject);
+  private
+    procedure pegaDados;
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  fCadCategoria: TfCadCategoria;
+
+implementation
+
+{$R *.dfm}
+
+uses uDM;
+
+{ TfCadCategoria }
+
+procedure TfCadCategoria.FormShow(Sender: TObject);
+begin
+  inherited;
+  pegaDados;
+end;
+
+procedure TfCadCategoria.pegaDados;
+var
+  filtro: string;
+  I: integer
+begin
+  with adoCategoria do
+  begin
+    close;
+    sql.Text := 'select * from categoria';
+    open;
+
+    FieldByName('id').DisplayLabel := 'ID';
+    FieldByName('id').DisplayWidth := 5;
+    FieldByName('descricao').DisplayLabel := 'Descrição';
+    FieldByName('descricao').DisplayWidth := 15;
+    for I := 0 to dbgListagem.Columns.Count -1  do
+    begin
+      dbgListagem.Columns[I].Alignment := taCenter;
+      dbgListagem.Columns[I].Title.Alignment := taCenter;
+    end;
+
+  end;
+end;
+
+end.
