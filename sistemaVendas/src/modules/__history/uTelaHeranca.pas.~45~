@@ -51,8 +51,7 @@ type
     apagar: TAction;
     Fechar: TAction;
     Pesquisar: TAction;
-    ADOQuery1: TADOQuery;
-    DataSource1: TDataSource;
+    lblIndice: TLabel;
     procedure btnNovoMouseEnter(Sender: TObject);
     procedure btnNovoMouseLeave(Sender: TObject);
     procedure btnAlterarMouseEnter(Sender: TObject);
@@ -73,6 +72,7 @@ type
     procedure btnGravarClick(Sender: TObject);
     procedure btnApagarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
+    procedure dbgListagemTitleClick(Column: TColumn);
   private
     EstadoDoCadastro : TEstadoDoCadastro;
     procedure ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar: TSpeedButton; Navegador: TDBNavigator; pgcPrincipal: TPageControl; Flag: Boolean);
@@ -80,6 +80,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    IndiceAtual: String;
   end;
 
 var
@@ -94,6 +95,7 @@ uses uDM, uCadCategoria, uPrincipal;
 procedure TfTelaHeranca.btnAlterarClick(Sender: TObject);
 begin
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, false);
+  EstadoDoCadastro :=  ecAlterar;
 end;
 
 procedure TfTelaHeranca.btnAlterarMouseEnter(Sender: TObject);
@@ -110,6 +112,7 @@ procedure TfTelaHeranca.btnApagarClick(Sender: TObject);
 begin
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
   ControlarIndiceTab(pgPrincipal, 0);
+  EstadoDoCadastro := ecNenhum;
 end;
 
 procedure TfTelaHeranca.btnApagarMouseEnter(Sender: TObject);
@@ -126,6 +129,7 @@ procedure TfTelaHeranca.btnCancelarClick(Sender: TObject);
 begin
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
   ControlarIndiceTab(pgPrincipal, 0);
+  EstadoDoCadastro := ecNenhum;
 end;
 
 procedure TfTelaHeranca.btnCancelarMouseEnter(Sender: TObject);
@@ -155,8 +159,21 @@ end;
 
 procedure TfTelaHeranca.btnGravarClick(Sender: TObject);
 begin
-  ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
-  ControlarIndiceTab(pgPrincipal, 0);
+  Try
+    ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
+    ControlarIndiceTab(pgPrincipal, 0);
+
+    if (EstadoDoCadastro = ecInserir) then
+        ShowMessage('Inserido')
+    Else if (EstadoDoCadastro = ecAlterar)  then
+        ShowMessage('Alterado')
+    Else
+        ShowMessage('Nada Aconteceu');
+
+
+  Finally
+    EstadoDoCadastro := ecNenhum;
+  End;
 end;
 
 // toda vez que clicar no botão vai aparecer gravar
@@ -174,6 +191,7 @@ end;
 procedure TfTelaHeranca.btnNovoClick(Sender: TObject);
 begin
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, false);
+  EstadoDoCadastro := ecInserir;
 end;
 
 procedure TfTelaHeranca.btnNovoMouseEnter(Sender: TObject);
@@ -217,6 +235,14 @@ begin
   if (pgcPrincipal.Pages[indice].TabVisible) then
       pgcPrincipal.TabIndex := indice;
 
+end;
+
+// Pegar o titulo da coluna grid, primeira coluna é id, ao clicar na coluna irá aparecer a mensagem ID
+procedure TfTelaHeranca.dbgListagemTitleClick(Column: TColumn);
+begin
+ // ShowMessage(Column.FieldName);  - Informa o nome da coluna após clicar sobre a coluna da grid
+ //IndiceAtual := Column.FieldName;
+ // desativado no momento, mas talvez eu volte aqui, acrido que tem que ser na minha outra tela
 end;
 
 end.

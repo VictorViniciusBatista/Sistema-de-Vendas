@@ -72,14 +72,15 @@ type
     procedure btnGravarClick(Sender: TObject);
     procedure btnApagarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
-    procedure dbgListagemTitleClick(Column: TColumn);
   private
     EstadoDoCadastro : TEstadoDoCadastro;
     procedure ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar: TSpeedButton; Navegador: TDBNavigator; pgcPrincipal: TPageControl; Flag: Boolean);
     procedure ControlarIndiceTab(pgcPrincipal: TPageControl; indice: integer);
+
     { Private declarations }
   public
     { Public declarations }
+    IndiceAtual: String;
   end;
 
 var
@@ -233,13 +234,7 @@ procedure TfTelaHeranca.ControlarIndiceTab(pgcPrincipal: TPageControl;
 begin
   if (pgcPrincipal.Pages[indice].TabVisible) then
       pgcPrincipal.TabIndex := indice;
-
 end;
 
-// Pegar o titulo da coluna grid, primeira coluna é id, ao clicar na coluna irá aparecer a mensagem ID
-procedure TfTelaHeranca.dbgListagemTitleClick(Column: TColumn);
-begin
-  ShowMessage(Column.FieldName);
-end;
 
 end.

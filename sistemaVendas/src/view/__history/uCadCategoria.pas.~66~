@@ -18,8 +18,6 @@ type
     //procedure dbgListagemDblClick(Sender: TObject);
     procedure dbgListagemTitleClick(Column: TColumn);
     procedure btnPesquisarClick(Sender: TObject);
-    procedure edtPesquisarKeyUp(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
 
   private
     procedure pegaDados;
@@ -66,14 +64,6 @@ begin
   // lblIndice.Caption := RetornaCampoTraduzido(Column.Field.FieldName);  trocou pela de baixo
   ExibirLabelIndice(Column.Field.FieldName, lblIndice);
 
-end;
-
-// Evento do campo digite sua pesquisa, depois de fazer a consulta e depois de tirar alguma informação do campo, a grid volta a aparecer todos os registros
-procedure TfCadCategoria.edtPesquisarKeyUp(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-begin
-  inherited;
-  pegadados;
 end;
 
 procedure TfCadCategoria.ExibirLabelIndice(Campo: String; aLabel: TLabel);

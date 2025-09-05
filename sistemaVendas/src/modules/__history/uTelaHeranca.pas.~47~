@@ -51,8 +51,7 @@ type
     apagar: TAction;
     Fechar: TAction;
     Pesquisar: TAction;
-    ADOQuery1: TADOQuery;
-    DataSource1: TDataSource;
+    lblIndice: TLabel;
     procedure btnNovoMouseEnter(Sender: TObject);
     procedure btnNovoMouseLeave(Sender: TObject);
     procedure btnAlterarMouseEnter(Sender: TObject);
@@ -73,6 +72,7 @@ type
     procedure btnGravarClick(Sender: TObject);
     procedure btnApagarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
+    //procedure dbgListagemTitleClick(Column: TColumn);
   private
     EstadoDoCadastro : TEstadoDoCadastro;
     procedure ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar: TSpeedButton; Navegador: TDBNavigator; pgcPrincipal: TPageControl; Flag: Boolean);
@@ -80,6 +80,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    IndiceAtual: String;
   end;
 
 var
@@ -163,9 +164,9 @@ begin
     ControlarIndiceTab(pgPrincipal, 0);
 
     if (EstadoDoCadastro = ecInserir) then
-        ShowMessage('Inserir');
+        ShowMessage('Inserido')
     Else if (EstadoDoCadastro = ecAlterar)  then
-        ShowMessage('Alterado');
+        ShowMessage('Alterado')
     Else
         ShowMessage('Nada Aconteceu');
 
@@ -235,5 +236,15 @@ begin
       pgcPrincipal.TabIndex := indice;
 
 end;
+
+{
+// Pegar o titulo da coluna grid, primeira coluna é id, ao clicar na coluna irá aparecer a mensagem ID
+procedure TfTelaHeranca.dbgListagemTitleClick(Column: TColumn);
+begin
+ // ShowMessage(Column.FieldName);  - Informa o nome da coluna após clicar sobre a coluna da grid
+ //IndiceAtual := Column.FieldName;
+ // desativado no momento, mas talvez eu volte aqui, acrido que tem que ser na minha outra tela
+end;
+}
 
 end.

@@ -17,80 +17,98 @@ inherited fCadCategoria: TfCadCategoria
     ExplicitHeight = 99
     inherited btnNavigator: TDBNavigator
       Height = 99
+      DataSource = DataSource1
       Hints.Strings = ()
-      ExplicitLeft = 592
-      ExplicitTop = 2
+      ExplicitHeight = 99
     end
     inherited pnlNovo: TPanel
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
+      ExplicitHeight = 99
       inherited btnNovo: TSpeedButton
         Height = 99
+        ExplicitHeight = 99
       end
     end
     inherited pnlEspaco: TPanel
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
+      ExplicitHeight = 99
     end
     inherited pnlAlterar: TPanel
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
+      ExplicitHeight = 99
       inherited btnAlterar: TSpeedButton
         Height = 99
+        ExplicitHeight = 99
       end
     end
     inherited pnlEspaco2: TPanel
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
+      ExplicitHeight = 99
     end
     inherited pnlCancelar: TPanel
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
+      ExplicitHeight = 99
       inherited btnCancelar: TSpeedButton
         Height = 99
+        ExplicitHeight = 99
       end
     end
     inherited pnlEspaco3: TPanel
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
+      ExplicitHeight = 99
     end
     inherited pnlGravar: TPanel
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
+      ExplicitHeight = 99
       inherited btnGravar: TSpeedButton
         Height = 99
+        ExplicitHeight = 99
       end
     end
     inherited pnlEspaco4: TPanel
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
+      ExplicitHeight = 99
     end
     inherited pnlApagar: TPanel
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
+      ExplicitHeight = 99
       inherited btnApagar: TSpeedButton
         Height = 99
+        ExplicitHeight = 99
       end
     end
     inherited pnlEspaco5: TPanel
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
+      ExplicitHeight = 99
     end
     inherited pnlEspaco6: TPanel
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
+      ExplicitHeight = 99
     end
     inherited pnlEspaco7: TPanel
       Left = 1166
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
       ExplicitLeft = 1166
+      ExplicitHeight = 99
     end
     inherited pnlFechar: TPanel
       Left = 1051
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
       ExplicitLeft = 1051
+      ExplicitHeight = 99
       inherited btnFechar: TSpeedButton
         Height = 99
         ExplicitLeft = 6
@@ -104,20 +122,20 @@ inherited fCadCategoria: TfCadCategoria
       Height = 99
       StyleElements = [seFont, seClient, seBorder]
       ExplicitLeft = 1046
+      ExplicitHeight = 99
     end
   end
   inherited pgPrincipal: TPageControl
     Width = 1170
     Height = 576
     ExplicitWidth = 1170
-    ExplicitHeight = 585
+    ExplicitHeight = 576
     inherited tabListagem: TTabSheet
       ExplicitWidth = 1162
       ExplicitHeight = 546
       inherited pnlBotoesListagem: TPanel
         Width = 1162
         StyleElements = [seFont, seClient, seBorder]
-        ExplicitTop = -6
         ExplicitWidth = 1162
         inherited pnlEspaco9: TPanel
           StyleElements = [seFont, seClient, seBorder]
@@ -128,9 +146,9 @@ inherited fCadCategoria: TfCadCategoria
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited edtPesquisar: TMaskEdit
-            Left = 6
+            Left = 18
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitLeft = 6
+            ExplicitLeft = 18
           end
           inherited pnlPesquisarr: TPanel
             StyleElements = [seFont, seClient, seBorder]
@@ -142,6 +160,7 @@ inherited fCadCategoria: TfCadCategoria
         Height = 445
         DataSource = DataSource1
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+        OnDblClick = dbgListagemDblClick
       end
       object StatusBar1: TStatusBar
         Left = 0
@@ -152,10 +171,13 @@ inherited fCadCategoria: TfCadCategoria
           item
             BiDiMode = bdLeftToRight
             ParentBiDiMode = False
-            Text = 'Total Equipamentos'
+            Text = 'Total Equipamentos:'
             Width = 150
           end
           item
+            Alignment = taCenter
+            BiDiMode = bdLeftToRight
+            ParentBiDiMode = False
             Width = 50
           end
           item

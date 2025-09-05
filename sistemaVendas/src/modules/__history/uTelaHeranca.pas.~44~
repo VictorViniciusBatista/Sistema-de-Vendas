@@ -51,8 +51,7 @@ type
     apagar: TAction;
     Fechar: TAction;
     Pesquisar: TAction;
-    ADOQuery1: TADOQuery;
-    DataSource1: TDataSource;
+    lblIndice: TLabel;
     procedure btnNovoMouseEnter(Sender: TObject);
     procedure btnNovoMouseLeave(Sender: TObject);
     procedure btnAlterarMouseEnter(Sender: TObject);
@@ -73,6 +72,7 @@ type
     procedure btnGravarClick(Sender: TObject);
     procedure btnApagarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
+    procedure dbgListagemTitleClick(Column: TColumn);
   private
     EstadoDoCadastro : TEstadoDoCadastro;
     procedure ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar: TSpeedButton; Navegador: TDBNavigator; pgcPrincipal: TPageControl; Flag: Boolean);
@@ -158,9 +158,21 @@ end;
 
 procedure TfTelaHeranca.btnGravarClick(Sender: TObject);
 begin
-  ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
-  ControlarIndiceTab(pgPrincipal, 0);
-  EstadoDoCadastro := ecNenhum;
+  Try
+    ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
+    ControlarIndiceTab(pgPrincipal, 0);
+
+    if (EstadoDoCadastro = ecInserir) then
+        ShowMessage('Inserido')
+    Else if (EstadoDoCadastro = ecAlterar)  then
+        ShowMessage('Alterado')
+    Else
+        ShowMessage('Nada Aconteceu');
+
+
+  Finally
+    EstadoDoCadastro := ecNenhum;
+  End;
 end;
 
 // toda vez que clicar no botão vai aparecer gravar
@@ -222,6 +234,12 @@ begin
   if (pgcPrincipal.Pages[indice].TabVisible) then
       pgcPrincipal.TabIndex := indice;
 
+end;
+
+// Pegar o titulo da coluna grid, primeira coluna é id, ao clicar na coluna irá aparecer a mensagem ID
+procedure TfTelaHeranca.dbgListagemTitleClick(Column: TColumn);
+begin
+  ShowMessage(Column.FieldName);
 end;
 
 end.

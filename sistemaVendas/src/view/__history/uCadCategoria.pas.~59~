@@ -15,11 +15,17 @@ type
     DataSource1: TDataSource;
     StatusBar1: TStatusBar;
     procedure FormShow(Sender: TObject);
+    //procedure dbgListagemDblClick(Sender: TObject);
+    procedure dbgListagemTitleClick(Column: TColumn);
+
   private
     procedure pegaDados;
+    procedure ExibirLabelIndice(Campo: String; aLabel: TLabel);
+    function RetornaCampoTraduzido(Campo: String): String;
     { Private declarations }
   public
     { Public declarations }
+    IndiceAtual: string;
   end;
 
 var
@@ -32,6 +38,31 @@ implementation
 uses uDM;
 
 { TfCadCategoria }
+
+// Ordenar as colunas do dbGrid
+procedure TfCadCategoria.dbgListagemTitleClick(Column: TColumn);
+begin
+  inherited;
+  //IndiceAtual := Column.Field.FieldName;
+
+  // Verifica se o campo é válido
+  if not Assigned(Column.Field) then Exit;
+
+  // Alterna entre ASC e DESC
+  if SameText(Trim(adoCategoria.Sort), Column.Field.FieldName + ' ASC') then
+    adoCategoria.Sort := Column.Field.FieldName + ' DESC'
+  else
+    adoCategoria.Sort := Column.Field.FieldName + ' ASC';
+
+  // lblIndice.Caption := RetornaCampoTraduzido(Column.Field.FieldName);  trocou pela de baixo
+  ExibirLabelIndice(Column.Field.FieldName, lblIndice);
+
+end;
+
+procedure TfCadCategoria.ExibirLabelIndice(Campo: String; aLabel: TLabel);
+begin
+  aLabel.Caption := RetornaCampoTraduzido(Campo);
+end;
 
 procedure TfCadCategoria.FormShow(Sender: TObject);
 begin
@@ -61,9 +92,27 @@ begin
       dbgListagem.Columns[I].Title.Alignment := taCenter;
     end;
 
+    //trazer o total de equipamentos
     StatusBar1.Panels[1].Text := IntToStr(adoCategoria.RecordCount);
 
   end;
+end;
+
+// Responsável por verificar a coluna que eu cliquei para que o lbl fique com o mesmo titulo
+function TfCadCategoria.RetornaCampoTraduzido(Campo: String): String;
+Var
+  I : integer;
+begin
+  for I := 0 to adoCategoria.Fields.Count -1 do
+  begin
+    if adoCategoria.Fields[i].FieldName = campo then
+    begin
+      Result := adoCategoria.Fields[i].DisplayLabel;
+      break;
+    end;
+
+  end;
+
 end;
 
 end.

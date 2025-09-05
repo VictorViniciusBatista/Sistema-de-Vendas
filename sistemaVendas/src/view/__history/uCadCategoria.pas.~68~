@@ -68,7 +68,6 @@ begin
 
 end;
 
-// Evento do campo digite sua pesquisa, depois de fazer a consulta e depois de tirar alguma informação do campo, a grid volta a aparecer todos os registros
 procedure TfCadCategoria.edtPesquisarKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin

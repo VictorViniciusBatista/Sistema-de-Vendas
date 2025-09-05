@@ -2594,8 +2594,6 @@ object fTelaHeranca: TfTelaHeranca
           Align = alLeft
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitLeft = 10
-          ExplicitTop = -6
           object lblIndice: TLabel
             Left = 18
             Top = 10
@@ -3035,7 +3033,6 @@ object fTelaHeranca: TfTelaHeranca
         TitleFont.Height = -12
         TitleFont.Name = 'Segoe UI'
         TitleFont.Style = []
-        OnTitleClick = dbgListagemTitleClick
       end
     end
     object tabManutencao: TTabSheet

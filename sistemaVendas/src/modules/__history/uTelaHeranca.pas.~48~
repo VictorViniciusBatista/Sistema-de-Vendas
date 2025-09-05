@@ -51,8 +51,7 @@ type
     apagar: TAction;
     Fechar: TAction;
     Pesquisar: TAction;
-    ADOQuery1: TADOQuery;
-    DataSource1: TDataSource;
+    lblIndice: TLabel;
     procedure btnNovoMouseEnter(Sender: TObject);
     procedure btnNovoMouseLeave(Sender: TObject);
     procedure btnAlterarMouseEnter(Sender: TObject);
@@ -74,11 +73,14 @@ type
     procedure btnApagarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
   private
+    EstadoDoCadastro : TEstadoDoCadastro;
     procedure ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar: TSpeedButton; Navegador: TDBNavigator; pgcPrincipal: TPageControl; Flag: Boolean);
     procedure ControlarIndiceTab(pgcPrincipal: TPageControl; indice: integer);
+
     { Private declarations }
   public
     { Public declarations }
+    IndiceAtual: String;
   end;
 
 var
@@ -93,6 +95,7 @@ uses uDM, uCadCategoria, uPrincipal;
 procedure TfTelaHeranca.btnAlterarClick(Sender: TObject);
 begin
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, false);
+  EstadoDoCadastro :=  ecAlterar;
 end;
 
 procedure TfTelaHeranca.btnAlterarMouseEnter(Sender: TObject);
@@ -109,6 +112,7 @@ procedure TfTelaHeranca.btnApagarClick(Sender: TObject);
 begin
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
   ControlarIndiceTab(pgPrincipal, 0);
+  EstadoDoCadastro := ecNenhum;
 end;
 
 procedure TfTelaHeranca.btnApagarMouseEnter(Sender: TObject);
@@ -125,6 +129,7 @@ procedure TfTelaHeranca.btnCancelarClick(Sender: TObject);
 begin
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
   ControlarIndiceTab(pgPrincipal, 0);
+  EstadoDoCadastro := ecNenhum;
 end;
 
 procedure TfTelaHeranca.btnCancelarMouseEnter(Sender: TObject);
@@ -154,8 +159,21 @@ end;
 
 procedure TfTelaHeranca.btnGravarClick(Sender: TObject);
 begin
-  ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
-  ControlarIndiceTab(pgPrincipal, 0);
+  Try
+    ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
+    ControlarIndiceTab(pgPrincipal, 0);
+
+    if (EstadoDoCadastro = ecInserir) then
+        ShowMessage('Inserido')
+    Else if (EstadoDoCadastro = ecAlterar)  then
+        ShowMessage('Alterado')
+    Else
+        ShowMessage('Nada Aconteceu');
+
+
+  Finally
+    EstadoDoCadastro := ecNenhum;
+  End;
 end;
 
 // toda vez que clicar no botão vai aparecer gravar
@@ -173,6 +191,7 @@ end;
 procedure TfTelaHeranca.btnNovoClick(Sender: TObject);
 begin
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, false);
+  EstadoDoCadastro := ecInserir;
 end;
 
 procedure TfTelaHeranca.btnNovoMouseEnter(Sender: TObject);
@@ -217,5 +236,6 @@ begin
       pgcPrincipal.TabIndex := indice;
 
 end;
+
 
 end.
