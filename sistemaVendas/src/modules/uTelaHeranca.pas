@@ -52,6 +52,8 @@ type
     Fechar: TAction;
     Pesquisar: TAction;
     lblIndice: TLabel;
+    edtCategoria: TLabeledEdit;
+    edtDescricao: TLabeledEdit;
     procedure btnNovoMouseEnter(Sender: TObject);
     procedure btnNovoMouseLeave(Sender: TObject);
     procedure btnAlterarMouseEnter(Sender: TObject);
@@ -72,15 +74,25 @@ type
     procedure btnGravarClick(Sender: TObject);
     procedure btnApagarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure dbgListagemDblClick(Sender: TObject);
+
+
   private
-    EstadoDoCadastro : TEstadoDoCadastro;
+
     procedure ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar: TSpeedButton; Navegador: TDBNavigator; pgcPrincipal: TPageControl; Flag: Boolean);
     procedure ControlarIndiceTab(pgcPrincipal: TPageControl; indice: integer);
+    procedure DesabilitarEdtPK;
+    procedure LimparEdits;
+
 
     { Private declarations }
   public
     { Public declarations }
     IndiceAtual: String;
+    EstadoDoCadastro : TEstadoDoCadastro;
+    function Excluir:Boolean; virtual;
+    function Grava(EstadoDoCadastro:TEstadoDoCadastro):Boolean; virtual;
   end;
 
 var
@@ -89,8 +101,13 @@ var
 implementation
 
 {$R *.dfm}
+{$region 'Observações'}
+// TAG 1 - CAMPO DO CÓDIGO, QUE SERIA O ID
+{$endregion}
 
 uses uDM, uCadCategoria, uPrincipal;
+
+{$region 'FUNÇOES E PROCEDURES'} // ESCONDER UM BLOCO DE CÓDIGO
 
 procedure TfTelaHeranca.btnAlterarClick(Sender: TObject);
 begin
@@ -103,6 +120,8 @@ begin
   btnAlterar.Caption := 'Alterar';
 end;
 
+{$endregion} // parte do region, pra esconder algum bloco de código
+
 procedure TfTelaHeranca.btnAlterarMouseLeave(Sender: TObject);
 begin
   btnAlterar.Caption := '';
@@ -110,9 +129,21 @@ end;
 
 procedure TfTelaHeranca.btnApagarClick(Sender: TObject);
 begin
-  ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
-  ControlarIndiceTab(pgPrincipal, 0);
-  EstadoDoCadastro := ecNenhum;
+  try
+    if (Excluir) then
+      begin
+        ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
+        ControlarIndiceTab(pgPrincipal, 0);
+         LimparEdits;
+      end
+      else
+      begin
+        MessageDlg('Erro na exclusão', TMsgDlgType.mtError, [TMsgDlgBtn.mbOK], 0);
+      end;
+  finally
+     EstadoDoCadastro := ecNenhum;
+  end;
+
 end;
 
 procedure TfTelaHeranca.btnApagarMouseEnter(Sender: TObject);
@@ -130,6 +161,7 @@ begin
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
   ControlarIndiceTab(pgPrincipal, 0);
   EstadoDoCadastro := ecNenhum;
+   LimparEdits;
 end;
 
 procedure TfTelaHeranca.btnCancelarMouseEnter(Sender: TObject);
@@ -144,6 +176,7 @@ end;
 
 procedure TfTelaHeranca.btnFecharClick(Sender: TObject);
 begin
+  close;
   self.Release;
 end;
 
@@ -159,20 +192,24 @@ end;
 
 procedure TfTelaHeranca.btnGravarClick(Sender: TObject);
 begin
+
+  if edtDescricao.Text = '' then
+  raise Exception.Create('Campo obrigatório');
+
   Try
-    ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
-    ControlarIndiceTab(pgPrincipal, 0);
-
-    if (EstadoDoCadastro = ecInserir) then
-        ShowMessage('Inserido')
-    Else if (EstadoDoCadastro = ecAlterar)  then
-        ShowMessage('Alterado')
-    Else
-        ShowMessage('Nada Aconteceu');
-
+    if Grava(EstadoDoCadastro) then
+    begin
+       ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
+       ControlarIndiceTab(pgPrincipal, 0);
+       EstadoDoCadastro := ecNenhum;
+       LimparEdits;
+    end
+    else
+    begin
+      MessageDlg('Erro na gravação', TMsgDlgType.mtError, [TMsgDlgBtn.mbOK], 0);
+    end;
 
   Finally
-    EstadoDoCadastro := ecNenhum;
   End;
 end;
 
@@ -192,6 +229,7 @@ procedure TfTelaHeranca.btnNovoClick(Sender: TObject);
 begin
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, false);
   EstadoDoCadastro := ecInserir;
+   LimparEdits;
 end;
 
 procedure TfTelaHeranca.btnNovoMouseEnter(Sender: TObject);
@@ -235,6 +273,80 @@ begin
   if (pgcPrincipal.Pages[indice].TabVisible) then
       pgcPrincipal.TabIndex := indice;
 end;
+
+procedure TfTelaHeranca.dbgListagemDblClick(Sender: TObject);
+begin
+  btnAlterar.Click;
+end;
+
+procedure TfTelaHeranca.DesabilitarEdtPK;
+var
+ i : integer;
+begin
+  for I := 0 to ComponentCount -1 do
+  begin
+    if (Components[i] is TLabeledEdit) then
+    begin
+      if (TLabeledEdit(Components[i]).Tag = 1) then
+      begin
+        TLabeledEdit(Components[i]).Enabled := false;
+        break;
+      end;
+
+    end;
+
+  end;
+
+end;
+
+{$region 'Metodos virtuais'}
+function TfTelaHeranca.Excluir: Boolean;
+begin
+  ShowMessage('DELETADO');
+  Result := true;
+end;
+
+
+function TfTelaHeranca.Grava(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
+begin
+
+   if (EstadoDoCadastro = ecInserir) then
+    ShowMessage('Inserir')
+  else if (EstadoDoCadastro = ecAlterar) then
+   ShowMessage('Alterado');
+  result := true;
+
+end;
+
+
+
+procedure TfTelaHeranca.LimparEdits;
+Var
+  i : integer;
+begin
+  for I := 0 to ComponentCount -1 do
+  begin
+    if (Components[i] is TLabeledEdit) then
+    begin
+      TLabeledEdit(Components[i]).Text := '';
+    end
+    else if (Components[i] is TEdit ) then
+      TEdit(Components[i]).Text := '';
+  end;
+end;
+
+{$endregion}
+
+procedure TfTelaHeranca.FormShow(Sender: TObject);
+begin
+    DesabilitarEdtPK;
+   //travar o botão canceliar e gravar, ao abrir página, só vai habilitar quando clicar em enserir ou alterar
+   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
+   ControlarIndiceTab(pgPrincipal, 0);
+end;
+
+
+
 
 
 end.

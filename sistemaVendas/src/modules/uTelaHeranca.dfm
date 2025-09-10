@@ -13,6 +13,7 @@ object fTelaHeranca: TfTelaHeranca
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poScreenCenter
+  OnShow = FormShow
   TextHeight = 15
   object pnlBotoes: TPanel
     Left = 0
@@ -2107,10 +2108,8 @@ object fTelaHeranca: TfTelaHeranca
         OnClick = btnApagarClick
         OnMouseEnter = btnApagarMouseEnter
         OnMouseLeave = btnApagarMouseLeave
-        ExplicitLeft = 48
-        ExplicitTop = 32
-        ExplicitWidth = 23
-        ExplicitHeight = 22
+        ExplicitLeft = 3
+        ExplicitTop = 2
       end
     end
     object pnlEspaco5: TPanel
@@ -3033,16 +3032,44 @@ object fTelaHeranca: TfTelaHeranca
         TitleFont.Height = -12
         TitleFont.Name = 'Segoe UI'
         TitleFont.Style = []
+        OnDblClick = dbgListagemDblClick
       end
     end
     object tabManutencao: TTabSheet
       Caption = 'Manuten'#231#227'o'
       ImageIndex = 1
+      object edtCategoria: TLabeledEdit
+        Tag = 1
+        Left = 24
+        Top = 64
+        Width = 121
+        Height = 23
+        Constraints.MaxHeight = 30
+        EditLabel.Width = 39
+        EditLabel.Height = 15
+        EditLabel.Caption = 'C'#243'digo'
+        MaxLength = 10
+        NumbersOnly = True
+        TabOrder = 0
+        Text = ''
+      end
+      object edtDescricao: TLabeledEdit
+        Left = 24
+        Top = 136
+        Width = 665
+        Height = 23
+        Constraints.MaxHeight = 30
+        EditLabel.Width = 51
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Descri'#231#227'o'
+        TabOrder = 1
+        Text = ''
+      end
     end
   end
   object imgImagens: TImageList
-    Left = 920
-    Top = 184
+    Left = 928
+    Top = 112
     Bitmap = {
       494C010107001800040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
@@ -3317,8 +3344,8 @@ object fTelaHeranca: TfTelaHeranca
   end
   object ActionList1: TActionList
     Images = imgImagens
-    Left = 832
-    Top = 184
+    Left = 840
+    Top = 96
     object novo: TAction
       ImageIndex = 0
     end

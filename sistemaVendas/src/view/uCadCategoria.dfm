@@ -3,7 +3,8 @@ inherited fCadCategoria: TfCadCategoria
   ClientHeight = 675
   ClientWidth = 1170
   StyleElements = [seFont, seClient, seBorder]
-  OnShow = FormShow
+  OnClose = FormClose
+  OnCreate = FormCreate
   ExplicitWidth = 1170
   ExplicitHeight = 675
   TextHeight = 15
@@ -128,6 +129,7 @@ inherited fCadCategoria: TfCadCategoria
   inherited pgPrincipal: TPageControl
     Width = 1170
     Height = 576
+    ActivePage = tabManutencao
     ExplicitWidth = 1170
     ExplicitHeight = 576
     inherited tabListagem: TTabSheet
@@ -192,6 +194,12 @@ inherited fCadCategoria: TfCadCategoria
     inherited tabManutencao: TTabSheet
       ExplicitWidth = 1162
       ExplicitHeight = 546
+      inherited edtCategoria: TLabeledEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited edtDescricao: TLabeledEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
     end
   end
   object adoCategoria: TADOQuery

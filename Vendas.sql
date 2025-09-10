@@ -24,3 +24,6 @@ insert into categoria (descricao) values ('Perifericos')
 update categoria set descricao = 'Ubiquiti' where id = '1'
 
 Select * from categoria
+
+
+select * from categoria where id = '1' and descricao like '%Ubiquiti%'

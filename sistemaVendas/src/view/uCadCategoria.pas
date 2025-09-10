@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, Data.Win.ADODB,
   System.Actions, Vcl.ActnList, System.ImageList, Vcl.ImgList, Vcl.Grids,
   Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.Buttons, Vcl.DBCtrls,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, uEnum, cCadCategoria;
 
 type
   TfCadCategoria = class(TfTelaHeranca)
@@ -20,15 +20,20 @@ type
     procedure btnPesquisarClick(Sender: TObject);
     procedure edtPesquisarKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure btnGravarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
   private
+    oCategoria:TCategoria;  // OBJETO DEVE ESTAR PRIMEIRO QUE AS PROCEDURES SE NÃO DA ERRO
     procedure pegaDados;
+    function Excluir:Boolean; override;
+    function Grava(EstadoDoCadastro:TEstadoDoCadastro):Boolean; override;
     procedure ExibirLabelIndice(Campo: String; aLabel: TLabel);
     function RetornaCampoTraduzido(Campo: String): String;
     { Private declarations }
   public
     { Public declarations }
-    IndiceAtual: string;
   end;
 
 var
@@ -43,6 +48,17 @@ uses uDM;
 { TfCadCategoria }
 
 // Ordenar as colunas do dbGrid
+procedure TfCadCategoria.btnGravarClick(Sender: TObject);
+begin
+  
+  inherited;
+  //if edtDescricao.Text = '' then
+  //raise Exception.Create('Campo obrigatório');
+  //edtDescricao.SetFocus;
+  //abort
+
+end;
+
 procedure TfCadCategoria.btnPesquisarClick(Sender: TObject);
 begin
   inherited;
@@ -76,9 +92,46 @@ begin
   pegadados;
 end;
 
+{$region 'Override'}
+
+function TfCadCategoria.Excluir: Boolean;
+begin
+  Result := oCategoria.Apagar;
+end;
+
+function TfCadCategoria.Grava(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
+begin
+  if edtCategoria.Text <> '' then
+    oCategoria.codigo := StrToInt(edtCategoria.Text)
+  else
+    oCategoria.codigo := 0;
+
+  oCategoria.descricao := edtDescricao.text;
+
+  if (EstadoDoCadastro = ecInserir) then
+    Result := oCategoria.inserir
+  else if (EstadoDoCadastro = ecAlterar) then
+    Result := oCategoria.Atualizar;
+end;
+
+{$endregion}
+
 procedure TfCadCategoria.ExibirLabelIndice(Campo: String; aLabel: TLabel);
 begin
   aLabel.Caption := RetornaCampoTraduzido(Campo);
+end;
+
+procedure TfCadCategoria.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  if Assigned(oCategoria) then   // verifica antes se foi realmente criado
+    FreeAndNil(oCategoria);     // destroí o objeto depois se encontrar
+end;
+
+procedure TfCadCategoria.FormCreate(Sender: TObject);
+begin
+  inherited;
+  oCategoria := TCategoria.Create;
 end;
 
 procedure TfCadCategoria.FormShow(Sender: TObject);
@@ -96,9 +149,21 @@ var
 begin
   filtro := '';
 
+ if lblIndice.Caption = 'Descrição' then
+ begin
+  if edtPesquisar.Text <> '' then
+    filtro := 'where descricao like ' + QuotedStr('%' + edtPesquisar.Text + '%');
+ end
+ else
+ begin
+  if edtPesquisar.Text <> '' then
+    filtro := 'where id = ' + QuotedStr(edtPesquisar.Text);
+ end;
+
+ {
  if edtPesquisar.Text <> '' then
   filtro := 'where descricao like ' + QuotedStr('%' + edtPesquisar.Text + '%');
-
+ }
 
   with adoCategoria do
   begin

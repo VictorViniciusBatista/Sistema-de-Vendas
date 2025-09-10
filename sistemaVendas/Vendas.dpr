@@ -6,7 +6,8 @@ uses
   uDM in 'src\modules\uDM.pas' {DM: TDataModule},
   uTelaHeranca in 'src\modules\uTelaHeranca.pas' {fTelaHeranca},
   uCadCategoria in 'src\view\uCadCategoria.pas' {fCadCategoria},
-  uEnum in 'src\modules\uEnum.pas';
+  uEnum in 'src\modules\uEnum.pas',
+  cCadCategoria in 'src\view\cCadCategoria.pas';
 
 {$R *.res}
 
