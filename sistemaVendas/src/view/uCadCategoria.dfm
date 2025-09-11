@@ -5,6 +5,7 @@ inherited fCadCategoria: TfCadCategoria
   StyleElements = [seFont, seClient, seBorder]
   OnClose = FormClose
   OnCreate = FormCreate
+  ExplicitTop = 2
   ExplicitWidth = 1170
   ExplicitHeight = 675
   TextHeight = 15
@@ -28,6 +29,7 @@ inherited fCadCategoria: TfCadCategoria
       ExplicitHeight = 99
       inherited btnNovo: TSpeedButton
         Height = 99
+        ExplicitLeft = -6
         ExplicitHeight = 99
       end
     end

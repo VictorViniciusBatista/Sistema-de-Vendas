@@ -1,0 +1,83 @@
+inherited fCadCliente: TfCadCliente
+  Caption = 'Cadatris de Cliente'
+  StyleElements = [seFont, seClient, seBorder]
+  TextHeight = 15
+  inherited pnlBotoes: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+    inherited btnNavigator: TDBNavigator
+      Hints.Strings = ()
+    end
+    inherited pnlNovo: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlEspaco: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlAlterar: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlEspaco2: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlCancelar: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlEspaco3: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlGravar: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlEspaco4: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlApagar: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlEspaco5: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlEspaco6: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlEspaco7: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlFechar: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited pnlEspaco8: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+  end
+  inherited pgPrincipal: TPageControl
+    inherited tabListagem: TTabSheet
+      inherited pnlBotoesListagem: TPanel
+        StyleElements = [seFont, seClient, seBorder]
+        inherited pnlEspaco9: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+        end
+        inherited pnlPesquisar: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited lblIndice: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited edtPesquisar: TMaskEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited pnlPesquisarr: TPanel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
+      end
+    end
+    inherited tabManutencao: TTabSheet
+      inherited edtCategoria: TLabeledEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited edtDescricao: TLabeledEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+    end
+  end
+end

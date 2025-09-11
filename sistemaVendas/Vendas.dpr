@@ -7,7 +7,8 @@ uses
   uTelaHeranca in 'src\modules\uTelaHeranca.pas' {fTelaHeranca},
   uCadCategoria in 'src\view\uCadCategoria.pas' {fCadCategoria},
   uEnum in 'src\modules\uEnum.pas',
-  cCadCategoria in 'src\view\cCadCategoria.pas';
+  cCadCategoria in 'src\view\cCadCategoria.pas',
+  uCadastroCliente in 'src\view\uCadastroCliente.pas' {fCadCliente};
 
 {$R *.res}
 
@@ -16,5 +17,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfPrincipal, fPrincipal);
   Application.CreateForm(TDM, DM);
+  Application.CreateForm(TfCadCliente, fCadCliente);
   Application.Run;
 end.

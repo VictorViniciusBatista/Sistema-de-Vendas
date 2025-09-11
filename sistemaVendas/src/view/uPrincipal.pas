@@ -75,6 +75,7 @@ begin
   Application.Terminate;
 end;
 
+//Chamar a tela uCadCategoria
 procedure TfPrincipal.N2Click(Sender: TObject);
 begin
   CriarForm(TfCadCategoria, fCadCategoria, 'TfCadCategoria')

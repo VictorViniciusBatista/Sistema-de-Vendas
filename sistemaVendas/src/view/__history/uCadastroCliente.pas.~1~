@@ -1,0 +1,26 @@
+unit uCadastroCliente;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, System.Actions,
+  Vcl.ActnList, System.ImageList, Vcl.ImgList, Vcl.ExtCtrls, Vcl.Grids,
+  Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.Buttons, Vcl.DBCtrls;
+
+type
+  TfTelaHeranca1 = class(TfTelaHeranca)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  fTelaHeranca1: TfTelaHeranca1;
+
+implementation
+
+{$R *.dfm}
+
+end.

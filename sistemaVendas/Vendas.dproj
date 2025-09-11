@@ -144,6 +144,10 @@
         </DCCReference>
         <DCCReference Include="src\modules\uEnum.pas"/>
         <DCCReference Include="src\view\cCadCategoria.pas"/>
+        <DCCReference Include="src\view\uCadastroCliente.pas">
+            <Form>fCadCliente</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

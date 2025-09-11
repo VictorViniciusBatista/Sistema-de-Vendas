@@ -2562,7 +2562,7 @@ object fTelaHeranca: TfTelaHeranca
     Top = 0
     Width = 1108
     Height = 567
-    ActivePage = tabListagem
+    ActivePage = tabManutencao
     Align = alClient
     TabOrder = 1
     object tabListagem: TTabSheet
@@ -3068,8 +3068,8 @@ object fTelaHeranca: TfTelaHeranca
     end
   end
   object imgImagens: TImageList
-    Left = 928
-    Top = 112
+    Left = 920
+    Top = 32
     Bitmap = {
       494C010107001800040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
@@ -3344,8 +3344,8 @@ object fTelaHeranca: TfTelaHeranca
   end
   object ActionList1: TActionList
     Images = imgImagens
-    Left = 840
-    Top = 96
+    Left = 848
+    Top = 32
     object novo: TAction
       ImageIndex = 0
     end

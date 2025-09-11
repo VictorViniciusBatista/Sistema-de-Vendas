@@ -25,6 +25,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnApagarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
+
 
   private
     oCategoria:TCategoria;  // OBJETO DEVE ESTAR PRIMEIRO QUE AS PROCEDURES SE NÃO DA ERRO
@@ -33,6 +35,7 @@ type
     function Grava(EstadoDoCadastro:TEstadoDoCadastro):Boolean; override;
     procedure ExibirLabelIndice(Campo: String; aLabel: TLabel);
     function RetornaCampoTraduzido(Campo: String): String;
+    var i : string;
     { Private declarations }
   public
     { Public declarations }
@@ -52,9 +55,10 @@ uses uDM;
 // Ordenar as colunas do dbGrid
 procedure TfCadCategoria.btnAlterarClick(Sender: TObject);
 begin
+  i := 'alterar';
 
   if adoCategoria.IsEmpty then
-    raise Exception.Create('Lista Vázia');
+  raise Exception.Create('Lista Vázia');
 
   edtCategoria.Text := adoCategoria.FieldByName('id').AsString;
   edtDescricao.Text := adoCategoria.FieldByName('descricao').AsString;
@@ -63,10 +67,12 @@ begin
 
 end;
 
+
 procedure TfCadCategoria.btnApagarClick(Sender: TObject);
 begin
+
   //Verificar se o usuário realmente quer excluir o item selecionado
-  if Application.MessageBox(PChar('Deseja excluir o item: ID ' + adoCategoria.FieldByName('id').AsString + ' ' + adoCategoria.FieldByName('descricao').AsString + '?'), 'Atenção', MB_YESNO or MB_ICONQUESTION) =  mrNo then
+  if Application.MessageBox(PChar('Deseja excluir o item '+#13+#13+ 'ID: ' + adoCategoria.FieldByName('id').AsString + #13 + 'Descrição: ' + adoCategoria.FieldByName('descricao').AsString + '?'), 'Atenção', MB_YESNO or MB_ICONQUESTION ) =  mrNo then
     abort;
 
   //fazer exclusão do item
@@ -83,17 +89,29 @@ end;
 
 procedure TfCadCategoria.btnGravarClick(Sender: TObject);
 begin
-  //fazer update
-  with dm.Qu do
+
+  if i = 'alterar' then
   begin
-    close;
-    sql.text := 'update categoria set descricao = '+QuotedStr(edtDescricao.Text)+
-    ' WHERE id = '+edtCategoria.Text;
-    ExecSQL;
+    //fazer update
+    with dm.Qu do
+    begin
+      close;
+      sql.text := 'update categoria set descricao = '+QuotedStr(edtDescricao.Text)+
+      ' WHERE id = '+edtCategoria.Text;
+      ExecSQL;
+    end;
+    //---------
   end;
-  //---------
+
   inherited;
   pegaDados;
+end;
+
+procedure TfCadCategoria.btnNovoClick(Sender: TObject);
+begin
+  inherited;
+  i := 'novo';
+  edtDescricao.Text := '';
 end;
 
 procedure TfCadCategoria.btnPesquisarClick(Sender: TObject);

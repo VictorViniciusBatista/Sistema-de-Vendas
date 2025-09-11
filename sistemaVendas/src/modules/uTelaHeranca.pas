@@ -210,6 +210,7 @@ begin
     end;
 
   Finally
+
   End;
 end;
 
@@ -229,7 +230,7 @@ procedure TfTelaHeranca.btnNovoClick(Sender: TObject);
 begin
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, false);
   EstadoDoCadastro := ecInserir;
-   LimparEdits;
+  LimparEdits;
 end;
 
 procedure TfTelaHeranca.btnNovoMouseEnter(Sender: TObject);
@@ -344,9 +345,5 @@ begin
    ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
    ControlarIndiceTab(pgPrincipal, 0);
 end;
-
-
-
-
 
 end.

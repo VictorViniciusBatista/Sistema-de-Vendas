@@ -23,10 +23,8 @@ object fPrincipal: TfPrincipal
     Height = 658
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 440
-    ExplicitTop = 344
-    ExplicitWidth = 185
-    ExplicitHeight = 41
+    ExplicitWidth = 1044
+    ExplicitHeight = 650
   end
   object mainPrincipal: TMainMenu
     Left = 952
