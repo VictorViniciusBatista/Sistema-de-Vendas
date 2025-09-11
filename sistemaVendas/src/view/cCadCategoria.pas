@@ -23,7 +23,7 @@ type
     function Inserir: Boolean;
     function Atualizar: Boolean;
     function Apagar: Boolean;
-    function Selecionar (id:Integer): Boolean;
+
 
   published
     property codigo:Integer    read getCodigo    write setCodigo;
@@ -35,7 +35,7 @@ implementation
 
 { TCategoria }
 
-uses uDM;
+uses uDM, uCadCategoria;
 
 {$region 'Metodos para o Banco de dados'}
 function TCategoria.Apagar: Boolean;
@@ -58,17 +58,8 @@ begin
     close;
     sql.Text := 'insert into categoria (descricao) values ('+ quotedstr(F_descricao)+')';
     ExecSQL;
-    ShowMessage('Novo item adicionado com sucesso');
   end;
 
-  // Result := true;
-  // ShowMessage(self.F_descricao);
-  //ShowMessage(F_descricao);
-end;
-
-function TCategoria.Selecionar(id: Integer): Boolean;
-begin
-   Result := true;
 end;
 
 {$endregion}

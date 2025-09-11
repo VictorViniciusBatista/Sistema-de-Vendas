@@ -23,6 +23,8 @@ type
     procedure btnGravarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnApagarClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
 
   private
     oCategoria:TCategoria;  // OBJETO DEVE ESTAR PRIMEIRO QUE AS PROCEDURES SE NÃO DA ERRO
@@ -48,17 +50,50 @@ uses uDM;
 { TfCadCategoria }
 
 // Ordenar as colunas do dbGrid
+procedure TfCadCategoria.btnAlterarClick(Sender: TObject);
+begin
+
+  if adoCategoria.IsEmpty then
+    raise Exception.Create('Lista Vázia');
+
+  edtCategoria.Text := adoCategoria.FieldByName('id').AsString;
+  edtDescricao.Text := adoCategoria.FieldByName('descricao').AsString;
+
+  inherited;
+
+end;
+
+procedure TfCadCategoria.btnApagarClick(Sender: TObject);
+begin
+  //Verificar se o usuário realmente quer excluir o item selecionado
+  if Application.MessageBox(PChar('Deseja excluir o item: id' + adoCategoria.FieldByName('id').AsString + ' ' + adoCategoria.FieldByName('descricao').AsString + '?'), 'Atenção', MB_YESNO or MB_ICONQUESTION) =  mrNo then
+    abort;
+
+  //fazer exclusão do item
+  with dm.QU do
+  begin
+    close;
+    sql.text := 'delete from categoria where id = ' + adoCategoria.FieldByName('id').AsString;
+    ExecSQL;
+  end;
+
+  inherited;
+  adoCategoria.Refresh;
+end;
+
 procedure TfCadCategoria.btnGravarClick(Sender: TObject);
 begin
-  oCategoria.codigo := 100;
-  oCategoria.descricao := 'teste';
-  ShowMessage(oCategoria.descricao);
+  //fazer update
+  with dm.Qu do
+  begin
+    close;
+    sql.text := 'update categoria set descricao = '+QuotedStr(edtDescricao.Text)+
+    ' WHERE id = '+edtCategoria.Text;
+    ExecSQL;
+  end;
+  //---------
   inherited;
-  //if edtDescricao.Text = '' then
-  //raise Exception.Create('Campo obrigatório');
-  //edtDescricao.SetFocus;
-  //abort
-
+  pegaDados;
 end;
 
 procedure TfCadCategoria.btnPesquisarClick(Sender: TObject);
@@ -103,8 +138,15 @@ end;
 
 function TfCadCategoria.Grava(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
+  if edtCategoria.Text <> '' then
+    oCategoria.codigo := StrToInt(edtCategoria.Text)
+  else
+    oCategoria.codigo := 0;
+
+  oCategoria.descricao := edtDescricao.text;
+
   if (EstadoDoCadastro = ecInserir) then
-    Result := oCategoria.Gravar
+    Result := oCategoria.inserir
   else if (EstadoDoCadastro = ecAlterar) then
     Result := oCategoria.Atualizar;
 end;
@@ -155,10 +197,6 @@ begin
     filtro := 'where id = ' + QuotedStr(edtPesquisar.Text);
  end;
 
- {
- if edtPesquisar.Text <> '' then
-  filtro := 'where descricao like ' + QuotedStr('%' + edtPesquisar.Text + '%');
- }
 
   with adoCategoria do
   begin
@@ -169,7 +207,7 @@ begin
     FieldByName('id').DisplayLabel := 'ID';
     FieldByName('id').DisplayWidth := 5;
     FieldByName('descricao').DisplayLabel := 'Descrição';
-    FieldByName('descricao').DisplayWidth := 15;
+    FieldByName('descricao').DisplayWidth := 30;
     for I := 0 to dbgListagem.Columns.Count -1  do
     begin
       dbgListagem.Columns[I].Alignment := taCenter;

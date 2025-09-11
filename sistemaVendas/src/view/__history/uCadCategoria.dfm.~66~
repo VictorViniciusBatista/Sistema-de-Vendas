@@ -3,6 +3,7 @@ inherited fCadCategoria: TfCadCategoria
   ClientHeight = 675
   ClientWidth = 1170
   StyleElements = [seFont, seClient, seBorder]
+  OnClose = FormClose
   OnCreate = FormCreate
   ExplicitWidth = 1170
   ExplicitHeight = 675
@@ -128,7 +129,6 @@ inherited fCadCategoria: TfCadCategoria
   inherited pgPrincipal: TPageControl
     Width = 1170
     Height = 576
-    ActivePage = tabManutencao
     ExplicitWidth = 1170
     ExplicitHeight = 576
     inherited tabListagem: TTabSheet

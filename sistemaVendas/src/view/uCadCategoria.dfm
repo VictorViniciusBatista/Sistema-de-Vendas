@@ -130,6 +130,7 @@ inherited fCadCategoria: TfCadCategoria
     Width = 1170
     Height = 576
     ActivePage = tabManutencao
+    ExplicitTop = -6
     ExplicitWidth = 1170
     ExplicitHeight = 576
     inherited tabListagem: TTabSheet

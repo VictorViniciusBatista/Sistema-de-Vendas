@@ -35,7 +35,7 @@ implementation
 
 { TCategoria }
 
-uses uDM;
+uses uDM, uCadCategoria;
 
 {$region 'Metodos para o Banco de dados'}
 function TCategoria.Apagar: Boolean;
@@ -57,11 +57,10 @@ begin
   begin
     close;
     sql.Text := 'insert into categoria (descricao) values ('+ quotedstr(F_descricao)+')';
-    open;
+    ExecSQL;
     //ShowMessage('Novo item adicionado com sucesso');
   end;
-  Result :=true;
-  ShowMessage('Gravado');
+
   // Result := true;
   // ShowMessage(self.F_descricao);
   //ShowMessage(F_descricao);
@@ -70,6 +69,12 @@ end;
 function TCategoria.Selecionar(id: Integer): Boolean;
 begin
    Result := true;
+   with fCadCategoria.adoCategoria do
+   begin
+     close;
+     sql.Text := 'select * from categoria where id = ' + IntToStr(id);
+     open;
+   end;
 end;
 
 {$endregion}
