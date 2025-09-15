@@ -5,7 +5,6 @@ inherited fCadCategoria: TfCadCategoria
   StyleElements = [seFont, seClient, seBorder]
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitTop = 2
   ExplicitWidth = 1170
   ExplicitHeight = 675
   TextHeight = 15
@@ -131,8 +130,6 @@ inherited fCadCategoria: TfCadCategoria
   inherited pgPrincipal: TPageControl
     Width = 1170
     Height = 576
-    ActivePage = tabManutencao
-    ExplicitTop = -6
     ExplicitWidth = 1170
     ExplicitHeight = 576
     inherited tabListagem: TTabSheet
@@ -197,13 +194,38 @@ inherited fCadCategoria: TfCadCategoria
     inherited tabManutencao: TTabSheet
       ExplicitWidth = 1162
       ExplicitHeight = 546
-      inherited edtCategoria: TLabeledEdit
-        StyleElements = [seFont, seClient, seBorder]
+      object edtCategoria: TLabeledEdit
+        Left = 24
+        Top = 56
+        Width = 121
+        Height = 23
+        EditLabel.Width = 39
+        EditLabel.Height = 15
+        EditLabel.Caption = 'C'#243'digo'
+        Enabled = False
+        TabOrder = 0
+        Text = ''
       end
-      inherited edtDescricao: TLabeledEdit
-        StyleElements = [seFont, seClient, seBorder]
+      object edtDescricao: TLabeledEdit
+        Left = 24
+        Top = 112
+        Width = 665
+        Height = 23
+        EditLabel.Width = 51
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Descri'#231#227'o'
+        TabOrder = 1
+        Text = ''
       end
     end
+  end
+  inherited imgImagens: TImageList
+    Left = 1048
+    Top = 40
+  end
+  inherited ActionList1: TActionList
+    Left = 984
+    Top = 40
   end
   object adoCategoria: TADOQuery
     Connection = DM.conexao

@@ -24,7 +24,7 @@ insert into categoria (descricao) values ('Perifericos')
 update categoria set descricao = 'Ubiquiti' where id = '1'
 
 Select * from categoria
-
+Select * from categoria where descricao = 'Ubiquiti'
 
 select * from categoria where id = '1' and descricao like '%Ubiquiti%'
 
@@ -45,3 +45,23 @@ dataNascimento datetime
 )
 
 select * from clientes
+
+insert into clientes (nome, endereco, cidade, bairro, estado, cep, telefone, email, dataNascimento) values 
+(
+'Victor Vinicius dos Santos Batista', 'Rua azomar batista de carvalho', 'Sorocaba', 'Jardim Siriema', 'SP', '18075778', '15 991642121', 'vitor.ti@henriplast', '01/06/1998'
+); 
+
+
+insert into clientes (nome, endereco, cidade, bairro, estado, cep, telefone, email, dataNascimento) values 
+(
+'Camila Lima Leal', 'Rua azomar batista de carvalho', 'Sorocaba', 'Jardim Siriema', 'SP', '18075778', '15 991642121', 'camila.lima@henriplast', '23/11/2000'
+); 
+
+
+insert into clientes (nome, endereco, cidade, bairro, estado, cep, telefone, email, dataNascimento) values 
+(
+'Sonia Aparecida dos Santos', 'Rua azomar batista de carvalho', 'Sorocaba', 'Jardim Siriema', 'SP', '18075778', '15 991642121', 'sonia@henriplast', '30/02/1965'
+); 
+update clientes set email = 'vitor.ti@henriplast.com.br' where id = '1'
+
+select * from clientes where nome like '%v%'

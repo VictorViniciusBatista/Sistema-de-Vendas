@@ -1,0 +1,293 @@
+unit uCadastroCliente;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, System.Actions,
+  Vcl.ActnList, System.ImageList, Vcl.ImgList, Vcl.ExtCtrls, Vcl.Grids,
+  Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.Buttons, Vcl.DBCtrls,
+  RxToolEdit, Data.Win.ADODB;
+
+type
+  TfCadCliente = class(TfTelaHeranca)
+    edtCep: TMaskEdit;
+    lblCep: TLabel;
+    edtTelefone: TMaskEdit;
+    Label1: TLabel;
+    edtDataNascimento: TDateEdit;
+    Label2: TLabel;
+    edtNome: TLabeledEdit;
+    edtCodigo: TLabeledEdit;
+    adoCliente: TADOQuery;
+    dtCliente: TDataSource;
+    StatusBar1: TStatusBar;
+    edtEstado: TLabeledEdit;
+    edtEndereco: TLabeledEdit;
+    edtBairro: TLabeledEdit;
+    edtCidade: TLabeledEdit;
+    edtEmail: TLabeledEdit;
+    procedure FormShow(Sender: TObject);
+    procedure btnPesquisarClick(Sender: TObject);
+    procedure dbgListagemTitleClick(Column: TColumn);
+    procedure btnApagarClick(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+  private
+    procedure pegaDados;
+    procedure ExibirLabelIndice(Campo: String; aLabel: TLabel);
+    function RetornaCampoTraduzido(Campo: String): String;
+    var i : string;
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  fCadCliente: TfCadCliente;
+
+implementation
+
+{$R *.dfm}
+
+uses uDM;
+
+{ TfCadCliente }
+
+procedure TfCadCliente.btnAlterarClick(Sender: TObject);
+begin
+  i := 'alterar';
+
+  if adoCliente.IsEmpty then
+  raise Exception.Create('Lista Vázia');
+
+  //trazer as informações que estão no banco de dados para visualização já do cadastro
+  edtCodigo.text := adoCliente.FieldByName('id').AsString;
+  edtNome.Text := adoCliente.FieldByName('nome').AsString;
+  edtEndereco.Text := adoCliente.FieldByName('endereco').AsString;
+  edtCidade.Text := adoCliente.FieldByName('cidade').AsString;
+  edtBairro.Text := adoCliente.FieldByName('bairro').AsString;
+  edtEstado.Text := adoCliente.FieldByName('estado').AsString;
+  edtCep.Text := adoCliente.FieldByName('cep').AsString;
+  edtTelefone.Text := adoCliente.FieldByName('telefone').AsString;
+  edtEmail.Text := adoCliente.FieldByName('email').AsString;
+  edtDataNascimento.Text := adoCliente.FieldByName('dataNascimento').AsString;
+
+  inherited;
+end;
+
+procedure TfCadCliente.btnApagarClick(Sender: TObject);
+begin
+
+  //Verificar se o usuário realmente quer excluir o item selecionado
+  if Application.MessageBox(PChar('Deseja excluir o item '+#13+#13+ 'ID: ' + adoCliente.FieldByName('id').AsString + #13 + 'Nome: ' + adoCliente.FieldByName('nome').AsString + '?'), 'Atenção', MB_YESNO or MB_ICONQUESTION ) =  mrNo then
+  abort;
+
+  with DM.QU do
+  begin
+    close;
+    sql.Text := 'delete from clientes where id = ' + adoCliente.FieldByName('id').AsString;
+    ExecSQL;
+  end;
+
+  inherited;
+  adoCliente.Refresh;
+end;
+
+procedure TfCadCliente.btnGravarClick(Sender: TObject);
+begin
+  if edtNome.Text = '' then
+  raise Exception.Create('Campo do nome é obrigatório');
+
+  if edtCep.Text = '' then
+  raise Exception.Create('Campo do cep é obriagatório');
+
+  if edtEndereco.Text = '' then
+  raise Exception.Create('Campo do endereço é obrigatório');
+
+  if edtBairro.Text = '' then
+  raise Exception.Create('Campo do bairro é obrigatório');
+
+  if edtCidade.Text = '' then
+  raise Exception.Create('Campo da cidade é obrigatório');
+
+  if edtEstado.Text = '' then
+  raise Exception.Create('Campo do estado é obrigatório');
+
+  if edtEmail.Text = '' then
+  raise Exception.Create('Campo do e-mail é obrigatório');
+
+  if edtTelefone.Text = '' then
+  raise Exception.Create('Campo do telefone é obrigatório');
+
+  if edtDataNascimento.Text  = '' then
+  raise Exception.Create('Campo da data de nascimento é obrigatório');
+
+  if i = 'alterar' then
+  begin //fazer update, pra realizar a alteração do registro já cadastrado
+    with DM.QU do
+    begin
+      close;
+      sql.Text := 'update clientes set ' +
+                  'nome = ' + QuotedStr(edtNome.Text)+
+                  ', endereco = ' +QuotedStr(edtEndereco.Text)+
+                  ', cidade = ' +QuotedStr(edtCidade.Text)+
+                  ', bairro = ' +QuotedStr(edtBairro.Text)+
+                  ', estado = ' + QuotedStr(edtEstado.Text)+
+                  ', cep = ' + QuotedStr(edtCep.Text)+
+                  ', telefone = ' + QuotedStr(edtTelefone.Text)+
+                  ', email = ' + QuotedStr(edtEmail.Text)+
+                  ', dataNascimento = ' +QuotedStr(DateToStr(edtDataNascimento.Date))+
+                  ' where id = '+edtCodigo.Text;
+      ExecSQL;
+    end;
+  end
+  else
+  begin
+    with DM.QU do
+    begin
+      close;
+      sql.text := ' insert into clientes (nome, endereco, cidade, bairro, estado, cep, telefone, email, dataNascimento) values ('+QuotedStr(edtNome.Text) + ',' +
+                    QuotedStr(edtEndereco.Text) + ',' +
+                    QuotedStr(edtCidade.Text) + ',' +
+                    QuotedStr(edtBairro.Text) + ',' +
+                    QuotedStr(edtEstado.Text) + ',' +
+                    QuotedStr(edtCep.Text) + ',' +
+                    QuotedStr(edtTelefone.Text) + ',' +
+                    QuotedStr(edtEmail.Text) + ',' +
+                    QuotedStr(DateToStr(edtDataNascimento.Date)) + ')';
+    end;
+  end;
+
+  inherited;
+  pegaDados;
+end;
+
+procedure TfCadCliente.btnNovoClick(Sender: TObject);
+begin
+  inherited;
+  i := 'novo';
+  edtNome.Text := '';
+end;
+
+procedure TfCadCliente.btnPesquisarClick(Sender: TObject);
+begin
+  inherited;
+  pegaDados;
+end;
+
+// Responsável por ordenar de forma alfabética as colunas, de forma crescente ou decrescente
+procedure TfCadCliente.dbgListagemTitleClick(Column: TColumn);
+begin
+  inherited;
+
+  // Verifica se o campo é válido
+  if not Assigned(Column.Field) then Exit;
+
+  // Alterna entre ASC e DESC
+  if SameText(Trim(adoCliente.Sort), Column.Field.FieldName + ' ASC') then
+    adoCliente.Sort := Column.Field.FieldName + ' DESC'
+  else
+    adoCliente.Sort := Column.Field.FieldName + ' ASC';
+
+  ExibirLabelIndice(Column.Field.FieldName, lblIndice);
+
+end;
+
+procedure TfCadCliente.ExibirLabelIndice(Campo: String; aLabel: TLabel);
+begin
+  aLabel.Caption := RetornaCampoTraduzido(Campo);
+end;
+
+procedure TfCadCliente.FormShow(Sender: TObject);
+begin
+  inherited;
+  lblIndice.Caption := 'Nome';
+  pegaDados;
+end;
+
+procedure TfCadCliente.pegaDados;
+Var
+ filtro : string;
+ i, totalCliente : integer;
+begin
+  filtro := '';
+
+  //If para realizar a consulta pelo nome ou id
+  if lblIndice.Caption = 'Nome' then
+  begin
+    if edtPesquisar.Text <> '' then
+    filtro := 'where nome like ' + QuotedStr('%'+edtPesquisar.Text +'%');
+  end
+  Else
+  begin
+    if edtPesquisar.Text <> '' then
+    filtro := 'where id = ' + QuotedStr(edtPesquisar.Text);
+  end;
+
+  with adoCliente do
+  begin
+    close;
+    sql.Text := 'select * from clientes ' + filtro;
+    open;
+
+    //ajustar os campos da grid
+    FieldByName('id').DisplayLabel := 'ID';
+    FieldByName('id').DisplayWidth := 5;
+    FieldByName('nome').DisplayLabel := 'Nome';
+    FieldByName('nome').DisplayWidth := 40;
+    FieldByName('endereco').DisplayLabel := 'Endereço';
+    FieldByName('endereco').DisplayWidth := 40;
+    FieldByName('cidade').DisplayLabel := 'Cidade';
+    FieldByName('cidade').DisplayWidth := 15;
+    FieldByName('bairro').DisplayLabel := 'Bairro';
+    FieldByName('bairro').DisplayWidth := 15;
+    FieldByName('estado').DisplayLabel := 'Estado';
+    FieldByName('estado').DisplayWidth := 10;
+    FieldByName('cep').displayLabel := 'CEP';
+    FieldByName('cep').DisplayWidth := 20;
+    FieldByName('telefone').DisplayLabel := 'Telefone';
+    FieldByName('telefone').DisplayWidth := 20;
+    FieldByName('email').DisplayLabel := 'E-mail';
+    FieldByName('email').DisplayWidth := 40;
+    FieldByName('dataNascimento').DisplayLabel := 'Data de Nascimento';
+    FieldByName('dataNascimento').DisplayWidth := 30;
+
+    //realizar alinhamento das colunas e dos titulos de cada coluna
+    for I := 0 to dbgListagem.Columns.Count -1 do
+    begin
+      if (i = -1) then
+      begin
+
+      end
+      else
+      begin
+        dbgListagem.Columns[i].Alignment := taCenter;
+        dbgListagem.Columns[i].Title.Alignment := taCenter;
+      end;
+
+    end;
+
+    //realizar a soma do total de clientes, do status bar
+    StatusBar1.Panels[1].Text := IntToStr(adoCliente.RecordCount);
+
+  end;
+
+end;
+
+function TfCadCliente.RetornaCampoTraduzido(Campo: String): String;
+var
+ i : integer;
+begin
+   for I := 0 to adoCliente.Fields.Count -1 do
+  begin
+    if adoCliente.Fields[i].FieldName = campo then
+    begin
+      Result := adoCliente.Fields[i].DisplayLabel;
+      break;
+    end;
+  end;
+end;
+
+end.

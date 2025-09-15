@@ -3038,33 +3038,6 @@ object fTelaHeranca: TfTelaHeranca
     object tabManutencao: TTabSheet
       Caption = 'Manuten'#231#227'o'
       ImageIndex = 1
-      object edtCategoria: TLabeledEdit
-        Tag = 1
-        Left = 24
-        Top = 64
-        Width = 121
-        Height = 23
-        Constraints.MaxHeight = 30
-        EditLabel.Width = 39
-        EditLabel.Height = 15
-        EditLabel.Caption = 'C'#243'digo'
-        MaxLength = 10
-        NumbersOnly = True
-        TabOrder = 0
-        Text = ''
-      end
-      object edtDescricao: TLabeledEdit
-        Left = 24
-        Top = 136
-        Width = 665
-        Height = 23
-        Constraints.MaxHeight = 30
-        EditLabel.Width = 51
-        EditLabel.Height = 15
-        EditLabel.Caption = 'Descri'#231#227'o'
-        TabOrder = 1
-        Text = ''
-      end
     end
   end
   object imgImagens: TImageList

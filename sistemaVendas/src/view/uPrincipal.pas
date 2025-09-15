@@ -28,6 +28,7 @@ type
     pnlMain: TPanel;
     procedure mMenuFecharClick(Sender: TObject);
     procedure N2Click(Sender: TObject);
+    procedure Cliente1Click(Sender: TObject);
   private
     procedure CriarForm(TFormulario: TComponentClass; Formulario: TForm; NameForm: String);
     { Private declarations }
@@ -42,7 +43,13 @@ implementation
 
 {$R *.dfm}
 
-uses uCadCategoria;
+uses uCadCategoria, uCadastroCliente;
+
+ //Criar tela de cadastro de clientes
+procedure TfPrincipal.Cliente1Click(Sender: TObject);
+begin
+  CriarForm(TfCadCliente, fCadCliente, 'TfCadCliente')
+end;
 
 //Para criar tela dentro do componente mainmenu
 procedure TfPrincipal.CriarForm(TFormulario: TComponentClass; Formulario: TForm;

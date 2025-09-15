@@ -14,6 +14,8 @@ type
     adoCategoria: TADOQuery;
     DataSource1: TDataSource;
     StatusBar1: TStatusBar;
+    edtCategoria: TLabeledEdit;
+    edtDescricao: TLabeledEdit;
     procedure FormShow(Sender: TObject);
     //procedure dbgListagemDblClick(Sender: TObject);
     procedure dbgListagemTitleClick(Column: TColumn);
@@ -26,7 +28,6 @@ type
     procedure btnApagarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
-
 
   private
     oCategoria:TCategoria;  // OBJETO DEVE ESTAR PRIMEIRO QUE AS PROCEDURES SE NÃO DA ERRO
@@ -60,11 +61,11 @@ begin
   if adoCategoria.IsEmpty then
   raise Exception.Create('Lista Vázia');
 
+  //trazer as informações que estão no banco de dados para visualização já do cadastro
   edtCategoria.Text := adoCategoria.FieldByName('id').AsString;
   edtDescricao.Text := adoCategoria.FieldByName('descricao').AsString;
 
   inherited;
-
 end;
 
 
@@ -89,6 +90,9 @@ end;
 
 procedure TfCadCategoria.btnGravarClick(Sender: TObject);
 begin
+
+   if edtDescricao.Text = '' then
+  raise Exception.Create('Campo obrigatório');
 
   if i = 'alterar' then
   begin

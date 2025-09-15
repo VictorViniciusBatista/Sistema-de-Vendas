@@ -52,8 +52,6 @@ type
     Fechar: TAction;
     Pesquisar: TAction;
     lblIndice: TLabel;
-    edtCategoria: TLabeledEdit;
-    edtDescricao: TLabeledEdit;
     procedure btnNovoMouseEnter(Sender: TObject);
     procedure btnNovoMouseLeave(Sender: TObject);
     procedure btnAlterarMouseEnter(Sender: TObject);
@@ -192,9 +190,6 @@ end;
 
 procedure TfTelaHeranca.btnGravarClick(Sender: TObject);
 begin
-
-  if edtDescricao.Text = '' then
-  raise Exception.Create('Campo obrigatório');
 
   Try
     if Grava(EstadoDoCadastro) then
