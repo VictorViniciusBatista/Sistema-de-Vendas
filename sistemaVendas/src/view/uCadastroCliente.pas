@@ -11,10 +11,6 @@ uses
 
 type
   TfCadCliente = class(TfTelaHeranca)
-    edtCep: TMaskEdit;
-    lblCep: TLabel;
-    edtTelefone: TMaskEdit;
-    Label1: TLabel;
     edtDataNascimento: TDateEdit;
     Label2: TLabel;
     edtCodigo: TLabeledEdit;
@@ -27,6 +23,8 @@ type
     edtCidade: TLabeledEdit;
     edtEmail: TLabeledEdit;
     edtNome: TLabeledEdit;
+    edtCep: TLabeledEdit;
+    edtTelefone: TLabeledEdit;
     procedure FormShow(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure dbgListagemTitleClick(Column: TColumn);

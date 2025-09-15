@@ -51,6 +51,7 @@ object fPrincipal: TfPrincipal
       end
       object Produto1: TMenuItem
         Caption = 'Produto'
+        OnClick = Produto1Click
       end
       object Produto2: TMenuItem
         Caption = '-'

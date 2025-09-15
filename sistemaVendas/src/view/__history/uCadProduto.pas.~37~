@@ -1,0 +1,153 @@
+unit uCadProduto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, System.Actions,
+  Vcl.ActnList, System.ImageList, Vcl.ImgList, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.Buttons, Vcl.DBCtrls, Vcl.ExtCtrls,
+  Data.Win.ADODB;
+
+type
+  TfcadProduto = class(TfTelaHeranca)
+    adoCadProduto: TADOQuery;
+    dtProduto: TDataSource;
+    StatusBar1: TStatusBar;
+    procedure FormShow(Sender: TObject);
+    procedure dbgListagemTitleClick(Column: TColumn);
+    procedure btnPesquisarClick(Sender: TObject);
+  private
+  procedure pegaDados;
+  procedure ExibirLabelIndice(Campo: String; aLabel: TLabel);
+  function RetornaCampoTraduzido(Campo: String): String;
+  var i : string;
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  fcadProduto: TfcadProduto;
+
+implementation
+
+{$R *.dfm}
+
+uses uDM;
+
+{ TfcadProduto }
+
+// Responsável por ordenar de forma alfabética as colunas, de forma crescente ou decrescente
+procedure TfcadProduto.btnPesquisarClick(Sender: TObject);
+begin
+  inherited;
+  pegaDados;
+end;
+
+procedure TfcadProduto.dbgListagemTitleClick(Column: TColumn);
+begin
+  inherited;
+
+    // Verifica se o campo é válido
+  if not Assigned(Column.Field) then Exit;
+
+  // Alterna entre ASC e DESC
+  if SameText(Trim(adoCadProduto.Sort), Column.Field.FieldName + ' ASC') then
+    adoCadProduto.Sort := Column.Field.FieldName + ' DESC'
+  else
+    adoCadProduto.Sort := Column.Field.FieldName + ' ASC';
+
+  ExibirLabelIndice(Column.Field.FieldName, lblIndice);
+end;
+
+procedure TfcadProduto.ExibirLabelIndice(Campo: String; aLabel: TLabel);
+begin
+    aLabel.Caption := RetornaCampoTraduzido(Campo);
+end;
+
+procedure TfcadProduto.FormShow(Sender: TObject);
+begin
+  inherited;
+  lblIndice.Caption := 'Nome';
+  pegaDados;
+end;
+
+procedure TfcadProduto.pegaDados;
+var
+ filtro : string;
+ i, totalProduto : integer;
+begin
+  filtro := '';
+
+  //If para realizar a consulta pelo nome ou id
+  if lblIndice.Caption = 'Nome' then
+  begin
+    if edtPesquisar.Text <> '' then
+    filtro := 'where nome like ' +QuotedStr('%' +edtPesquisar.Text +'%');
+  end
+  else
+  begin
+    if edtPesquisar.Text <> '' then
+    filtro := 'where p.id = ' +QuotedStr(edtPesquisar.Text);
+  end;
+
+  with adoCadProduto do
+  begin
+    close;
+    //Traz tudo da tabela da esquerda e, se tiver algo relacionado na da direita, junta; se não tiver, ainda mostra os da esquerda.
+    sql.text := 'select p.id, p.nome, p.descricao, p.valor, p.quantidade, p.idCategoria, c.descricao ' +
+                'from produtos as p ' +
+                '  left join categoria as c on c.id = p.idCategoria ' + filtro;
+    open;
+    //ajustar os campos da grid
+    FieldByName('id').DisplayLabel := 'ID';
+    FieldByName('id').DisplayWidth := 5;
+    FieldByName('nome').DisplayLabel := 'Nome';
+    FieldByName('nome').DisplayWidth := 25;
+    FieldByName('descricao').DisplayLabel := 'Descrição do item';
+    FieldByName('descricao').DisplayWidth := 40;
+    FieldByName('valor').DisplayLabel := 'Valor do item';
+    FieldByName('valor').DisplayWidth := 13;
+    FieldByName('quantidade').DisplayLabel := 'Quantidade do item';
+    FieldByName('quantidade').DisplayWidth := 13;
+    FieldByName('idCategoria').DisplayLabel := 'Codigo da categoria';
+    FieldByName('idCategoria').DisplayWidth := 13;
+    FieldByName('descricao_1').DisplayLabel := 'Pertence a categoria';
+    FieldByName('descricao_1').DisplayWidth := 15;
+
+    //realizar alinhamento das colunas e dos titulos de cada coluna
+    for I := 0 to dbgListagem.Columns.Count -1 do
+    begin
+      if (i = -1) then
+      begin
+
+      end
+      else
+      begin
+        dbgListagem.Columns[i].Alignment := taCenter;
+        dbgListagem.Columns[i].Title.Alignment := taCenter;
+      end;
+    end;
+
+    //adicionar status bar, para somar a quantidade total de registros, total de valor, total de quantidade
+    StatusBar1.Panels[1].Text := IntToStr(adoCadProduto.RecordCount)
+
+  end;
+end;
+
+function TfcadProduto.RetornaCampoTraduzido(Campo: String): String;
+var
+ i : integer;
+begin
+  for I := 0 to adoCadProduto.Fields.Count -1 do
+  begin
+    if adoCadProduto.Fields[i].FieldName = campo then
+    begin
+      Result := adoCadProduto.Fields[i].DisplayLabel;
+      break;
+    end;
+  end;
+end;
+
+end.

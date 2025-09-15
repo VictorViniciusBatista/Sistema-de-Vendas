@@ -29,6 +29,7 @@ type
     procedure mMenuFecharClick(Sender: TObject);
     procedure N2Click(Sender: TObject);
     procedure Cliente1Click(Sender: TObject);
+    procedure Produto1Click(Sender: TObject);
   private
     procedure CriarForm(TFormulario: TComponentClass; Formulario: TForm; NameForm: String);
     { Private declarations }
@@ -43,7 +44,7 @@ implementation
 
 {$R *.dfm}
 
-uses uCadCategoria, uCadastroCliente;
+uses uCadCategoria, uCadastroCliente, uCadProduto;
 
  //Criar tela de cadastro de clientes
 procedure TfPrincipal.Cliente1Click(Sender: TObject);
@@ -86,6 +87,11 @@ end;
 procedure TfPrincipal.N2Click(Sender: TObject);
 begin
   CriarForm(TfCadCategoria, fCadCategoria, 'TfCadCategoria')
+end;
+
+procedure TfPrincipal.Produto1Click(Sender: TObject);
+begin
+  CriarForm(TfcadProduto, fcadProduto, 'TfcadProduto')
 end;
 
 end.

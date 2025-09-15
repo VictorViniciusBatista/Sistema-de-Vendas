@@ -57,11 +57,51 @@ insert into clientes (nome, endereco, cidade, bairro, estado, cep, telefone, ema
 'Camila Lima Leal', 'Rua azomar batista de carvalho', 'Sorocaba', 'Jardim Siriema', 'SP', '18075778', '15 991642121', 'camila.lima@henriplast', '23/11/2000'
 ); 
 
-
 insert into clientes (nome, endereco, cidade, bairro, estado, cep, telefone, email, dataNascimento) values 
 (
-'Sonia Aparecida dos Santos', 'Rua azomar batista de carvalho', 'Sorocaba', 'Jardim Siriema', 'SP', '18075778', '15 991642121', 'sonia@henriplast', '30/02/1965'
+'Sonia', 'Rua azomar batista de carvalho', 'Sorocaba', 'Jardim Siriema', 'SP', '18075778', '15 991642121', 'sonia@henriplast', '23/11/1965'
 ); 
+
+
+
+
 update clientes set email = 'vitor.ti@henriplast.com.br' where id = '1'
 
 select * from clientes where nome like '%v%'
+
+create table produtos 
+(
+id int primary key identity (1,1), 
+nome varchar (60) not null, 
+descricao varchar (255) not null, 
+valor decimal (18,5) not null,
+quantidade decimal (18,5) not null,
+idCategoria int
+)
+
+insert into produtos (nome, descricao, valor, quantidade, idCategoria) values 
+('Fone de ouvido', 'Fone de ouvido com fio', '80.00', 1, 5);
+
+insert into produtos (nome, descricao, valor, quantidade, idCategoria) values 
+('Fone de ouvido', 'Fone de ouvido sem fio', '100.00', 1, 5);
+
+insert into produtos (nome, descricao, valor, quantidade, idCategoria) values 
+('Fone de ouvido', 'Fone de ouvido gamer', '150.50', 1, 5);
+
+insert into produtos (nome, descricao, valor, quantidade, idCategoria) values 
+('Alcool Isoprobilico', 'alcool para limpar componentes eletricos', '120.50', 1, 14) 
+
+select * from produtos
+select * from categoria
+
+drop table produtos 
+
+select p.id,
+	   p.nome,
+	   p.descricao,
+	   p.valor,
+	   p.quantidade,
+	   p.idCategoria,
+	   c.descricao
+from produtos as p 
+	left join categoria as c on c.id = p.idCategoria
