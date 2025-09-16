@@ -89,7 +89,7 @@ insert into produtos (nome, descricao, valor, quantidade, idCategoria) values
 ('Fone de ouvido', 'Fone de ouvido gamer', '150.50', 1, 5);
 
 insert into produtos (nome, descricao, valor, quantidade, idCategoria) values 
-('Alcool Isoprobilico', 'alcool para limpar componentes eletricos', '120.50', 1, 14) 
+('Alcool Isoprobilico', 'alcool para limpar componentes eletricos', '120.50', 2, 14) 
 
 select * from produtos
 select * from categoria

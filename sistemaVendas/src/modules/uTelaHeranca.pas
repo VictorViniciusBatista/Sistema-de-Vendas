@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.ExtCtrls, Data.DB,
   Vcl.Buttons, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask,
-  System.Actions, Vcl.ActnList, System.ImageList, Vcl.ImgList, Data.Win.ADODB, uEnum;
+  System.Actions, Vcl.ActnList, System.ImageList, Vcl.ImgList, Data.Win.ADODB, uEnum,
+  RxToolEdit, RxCurrEdit;
 
 type
   TfTelaHeranca = class(TForm)
@@ -103,7 +104,8 @@ implementation
 // TAG 1 - CAMPO DO CÓDIGO, QUE SERIA O ID
 {$endregion}
 
-uses uDM, uCadCategoria, uPrincipal;
+uses uDM, uCadCategoria, uPrincipal, uCadastroCliente, uCadProduto,
+  cCadCategoria;
 
 {$region 'FUNÇOES E PROCEDURES'} // ESCONDER UM BLOCO DE CÓDIGO
 
@@ -159,7 +161,7 @@ begin
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgPrincipal, true);
   ControlarIndiceTab(pgPrincipal, 0);
   EstadoDoCadastro := ecNenhum;
-   LimparEdits;
+  LimparEdits;
 end;
 
 procedure TfTelaHeranca.btnCancelarMouseEnter(Sender: TObject);
@@ -327,7 +329,13 @@ begin
       TLabeledEdit(Components[i]).Text := '';
     end
     else if (Components[i] is TEdit ) then
-      TEdit(Components[i]).Text := '';
+      TEdit(Components[i]).Text := ''
+    else if (Components[i] is Tmemo ) then
+      Tmemo(Components[i]).Text := ''
+    else if (Components[i] is TDBLookupComboBox) then
+      TDBLookupComboBox(Components[i]).KeyValue := null
+    else if (Components[i] is TcurrencyEdit) then
+      TcurrencyEdit(Components[i]).value := 0;
   end;
 end;
 

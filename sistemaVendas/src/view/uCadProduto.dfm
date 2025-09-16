@@ -68,7 +68,7 @@ inherited fcadProduto: TfcadProduto
   inherited pgPrincipal: TPageControl
     Width = 1017
     Height = 453
-    ActivePage = tabListagem
+    ActivePage = tabManutencao
     ExplicitWidth = 1017
     ExplicitHeight = 453
     inherited tabListagem: TTabSheet
@@ -101,6 +101,7 @@ inherited fcadProduto: TfcadProduto
         Width = 1009
         Height = 331
         DataSource = dtProduto
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
         OnTitleClick = dbgListagemTitleClick
       end
       object StatusBar1: TStatusBar
@@ -133,25 +134,144 @@ inherited fcadProduto: TfcadProduto
           item
             Width = 50
           end>
-        ExplicitLeft = 504
-        ExplicitTop = 200
-        ExplicitWidth = 0
       end
     end
     inherited tabManutencao: TTabSheet
       ExplicitWidth = 1009
       ExplicitHeight = 423
+      object lblDescricao: TLabel
+        Left = 3
+        Top = 109
+        Width = 51
+        Height = 15
+        Caption = 'Descri'#231#227'o'
+      end
+      object lblValor: TLabel
+        Left = -1
+        Top = 265
+        Width = 26
+        Height = 15
+        Caption = 'Valor'
+      end
+      object lblQuantidade: TLabel
+        Left = 168
+        Top = 265
+        Width = 62
+        Height = 15
+        Caption = 'Quantidade'
+      end
+      object Categoria: TLabel
+        Left = 619
+        Top = 59
+        Width = 51
+        Height = 15
+        Caption = 'Categoria'
+      end
+      object edtProdutoID: TLabeledEdit
+        Tag = 1
+        Left = 3
+        Top = 32
+        Width = 91
+        Height = 23
+        Constraints.MaxHeight = 30
+        EditLabel.Width = 39
+        EditLabel.Height = 15
+        EditLabel.Caption = 'C'#243'digo'
+        Enabled = False
+        MaxLength = 60
+        TabOrder = 0
+        Text = ''
+      end
+      object edtNome: TLabeledEdit
+        Left = 3
+        Top = 80
+        Width = 610
+        Height = 23
+        EditLabel.Width = 36
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Nome '
+        MaxLength = 60
+        TabOrder = 1
+        Text = ''
+      end
+      object edtDescricao: TMemo
+        Left = 0
+        Top = 130
+        Width = 982
+        Height = 129
+        MaxLength = 255
+        TabOrder = 2
+      end
+      object edtValor: TCurrencyEdit
+        Left = 0
+        Top = 286
+        Width = 145
+        Height = 23
+        TabOrder = 3
+      end
+      object edtQuantidade: TCurrencyEdit
+        Left = 168
+        Top = 286
+        Width = 145
+        Height = 23
+        DisplayFormat = ' ,0.00;- ,0.00'
+        TabOrder = 4
+      end
+      object lkCategoria: TDBLookupComboBox
+        Left = 619
+        Top = 80
+        Width = 363
+        Height = 23
+        DataField = 'id'
+        KeyField = 'id'
+        ListField = 'descricao'
+        ListSource = dtCategoria
+        TabOrder = 5
+      end
     end
+  end
+  inherited imgImagens: TImageList
+    Left = 912
+    Top = 24
+  end
+  inherited ActionList1: TActionList
+    Left = 968
+    Top = 24
   end
   object adoCadProduto: TADOQuery
     Connection = DM.conexao
     Parameters = <>
-    Left = 680
-    Top = 40
+    Left = 160
+    Top = 8
   end
   object dtProduto: TDataSource
     DataSet = adoCadProduto
-    Left = 752
-    Top = 40
+    Left = 232
+    Top = 8
+  end
+  object adoCategoria: TADOQuery
+    Active = True
+    Connection = DM.conexao
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select id, descricao from categoria')
+    Left = 704
+    Top = 16
+    object adoCategoriaid: TAutoIncField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'id'
+      ReadOnly = True
+    end
+    object adoCategoriadescricao: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldName = 'descricao'
+      Size = 200
+    end
+  end
+  object dtCategoria: TDataSource
+    DataSet = adoCategoria
+    Left = 792
+    Top = 16
   end
 end

@@ -2562,9 +2562,11 @@ object fTelaHeranca: TfTelaHeranca
     Top = 0
     Width = 1108
     Height = 567
-    ActivePage = tabManutencao
+    ActivePage = tabListagem
     Align = alClient
     TabOrder = 1
+    ExplicitLeft = 9
+    ExplicitTop = -6
     object tabListagem: TTabSheet
       Caption = 'Listagem'
       object pnlBotoesListagem: TPanel
@@ -2577,6 +2579,7 @@ object fTelaHeranca: TfTelaHeranca
         BiDiMode = bdLeftToRight
         ParentBiDiMode = False
         TabOrder = 0
+        ExplicitTop = -6
         object pnlEspaco9: TPanel
           Left = 0
           Top = 0

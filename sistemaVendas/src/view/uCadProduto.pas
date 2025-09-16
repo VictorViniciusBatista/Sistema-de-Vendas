@@ -7,16 +7,34 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, System.Actions,
   Vcl.ActnList, System.ImageList, Vcl.ImgList, Vcl.Grids, Vcl.DBGrids,
   Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.Buttons, Vcl.DBCtrls, Vcl.ExtCtrls,
-  Data.Win.ADODB;
+  Data.Win.ADODB, RxToolEdit, RxCurrEdit;
 
 type
   TfcadProduto = class(TfTelaHeranca)
     adoCadProduto: TADOQuery;
     dtProduto: TDataSource;
     StatusBar1: TStatusBar;
+    edtProdutoID: TLabeledEdit;
+    edtNome: TLabeledEdit;
+    edtDescricao: TMemo;
+    lblDescricao: TLabel;
+    edtValor: TCurrencyEdit;
+    edtQuantidade: TCurrencyEdit;
+    lblValor: TLabel;
+    lblQuantidade: TLabel;
+    lkCategoria: TDBLookupComboBox;
+    adoCategoria: TADOQuery;
+    dtCategoria: TDataSource;
+    adoCategoriaid: TAutoIncField;
+    adoCategoriadescricao: TStringField;
+    Categoria: TLabel;
     procedure FormShow(Sender: TObject);
     procedure dbgListagemTitleClick(Column: TColumn);
     procedure btnPesquisarClick(Sender: TObject);
+    procedure btnApagarClick(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
   private
   procedure pegaDados;
   procedure ExibirLabelIndice(Campo: String; aLabel: TLabel);
@@ -39,6 +57,103 @@ uses uDM;
 { TfcadProduto }
 
 // Responsável por ordenar de forma alfabética as colunas, de forma crescente ou decrescente
+procedure TfcadProduto.btnAlterarClick(Sender: TObject);
+begin
+  i := 'alterar';
+
+  if adoCadProduto.IsEmpty then
+  raise Exception.Create('Lista Vázia');
+
+  //trazer as informações que estão no banco de dados para visualização já do cadastro
+  edtProdutoID.Text := adoCadProduto.FieldByName('id').AsString;
+  edtNome.Text := adoCadProduto.FieldByName('nome').AsString;
+  edtDescricao.Text := adoCadProduto.FieldByName('descricao').AsString;
+  edtValor.Text := adoCadProduto.FieldByName('valor').AsString;
+  edtQuantidade.Text := adoCadProduto.FieldByName('quantidade').AsString;
+  lkCategoria.KeyValue := adoCadProduto.FieldByName('idCategoria').AsString;
+  inherited;
+end;
+
+procedure TfcadProduto.btnApagarClick(Sender: TObject);
+begin
+
+  if Application.MessageBox(PChar('Deseja excluir o item '+#13+#13+ 'ID: ' + adoCadProduto.FieldByName('id').AsString + #13 + 'Nome: ' + adoCadProduto.FieldByName('nome').AsString + '?'), 'Atenção', MB_YESNO or MB_ICONQUESTION ) =  mrNo then
+  abort;
+
+  with DM.QU do
+  begin
+    close;
+    sql.Text := 'delete from produtos where id = ' + adoCadProduto.FieldByName('id').AsString;
+    ExecSQL;
+  end;
+  inherited;
+  adoCadProduto.Refresh;
+end;
+
+procedure TfcadProduto.btnGravarClick(Sender: TObject);
+begin
+  if edtNome.Text = '' then
+  raise Exception.Create('Campo nome é obrigatório');
+
+  if edtDescricao.Text = '' then
+  raise Exception.Create('Campo descrição é obrigatório');
+
+  if edtValor.Text = '' then
+  raise Exception.Create('Campo valor é obrigatório');
+
+  if edtQuantidade.Text = '' then
+  raise Exception.Create('Campo quantidade é obrigatório');
+
+  if lkCategoria.Text = ''  then
+  raise Exception.Create('selecionar uma categoria');
+
+  if i = 'alterar'  then
+  begin
+    with DM.QU do
+    begin
+      close;
+      sql.Text := 'update produtos set ' +
+                   'nome = ' + QuotedStr(edtNome.Text)+
+                   ', descricao = ' + QuotedStr(edtDescricao.Text)+
+                   ', valor = ' + StringReplace(StringReplace(edtValor.Text, '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+
+                   ', quantidade = ' + QuotedStr(edtQuantidade.Text)+
+                   ', idCategoria = ' + IntToStr(lkCategoria.KeyValue) +
+                   ' where id = ' + edtProdutoID.Text;
+      ExecSQL;
+    end;
+  end
+  else
+  begin
+    with DM.QU do
+    begin
+      close;
+      sql.Text := 'insert into produtos (nome, descricao, valor, quantidade, idCategoria) values ('+QuotedStr(edtNome.Text) + ',' +
+                   QuotedStr(edtDescricao.text) + ',' +
+                   FloatToStr(
+                      StrToFloat(
+                        StringReplace(
+                          StringReplace(edtValor.Text, '.', '', [rfReplaceAll]),
+                          ',', '.', [rfReplaceAll]
+                        )
+                      )
+                    )+
+                   QuotedStr(edtQuantidade.Text) + ',' +
+                   IntToStr(lkCategoria.KeyValue) + ')';
+      ExecSQL;
+    end;
+  end;
+
+  inherited;
+  pegaDados;
+end;
+
+procedure TfcadProduto.btnNovoClick(Sender: TObject);
+begin
+  inherited;
+  i := 'novo';
+  edtNome.Text := '';
+end;
+
 procedure TfcadProduto.btnPesquisarClick(Sender: TObject);
 begin
   inherited;
@@ -141,12 +256,10 @@ begin
       next;
     end;
 
-
     //adicionar status bar, para somar a quantidade total de registros, total de valor, total de quantidade
     StatusBar1.Panels[1].Text := IntToStr(adoCadProduto.RecordCount);
     StatusBar1.Panels[3].Text := 'R$ '+FormatFloat('#.##', ganhos);
     StatusBar1.Panels[5].Text := ' ' +FormatFloat('', quantidadeR);
-
   end;
 end;
 

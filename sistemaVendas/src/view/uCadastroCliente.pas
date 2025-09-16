@@ -71,7 +71,6 @@ begin
   edtTelefone.Text := adoCliente.FieldByName('telefone').AsString;
   edtEmail.Text := adoCliente.FieldByName('email').AsString;
   edtDataNascimento.Text := adoCliente.FieldByName('dataNascimento').AsString;
-
   inherited;
 end;
 
