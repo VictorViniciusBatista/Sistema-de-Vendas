@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls, uAtualizarDB;
 
 type
   TfPrincipal = class(TForm)
@@ -30,8 +30,11 @@ type
     procedure N2Click(Sender: TObject);
     procedure Cliente1Click(Sender: TObject);
     procedure Produto1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+
   private
     procedure CriarForm(TFormulario: TComponentClass; Formulario: TForm; NameForm: String);
+    procedure atualizarBancoDados(aForm:TfAtualizarDB);
     { Private declarations }
   public
     { Public declarations }
@@ -44,9 +47,40 @@ implementation
 
 {$R *.dfm}
 
-uses uCadCategoria, uCadastroCliente, uCadProduto;
+uses uCadCategoria, uCadastroCliente, uCadProduto, uDM;
 
  //Criar tela de cadastro de clientes
+procedure TfPrincipal.atualizarBancoDados(aForm: TfAtualizarDB);
+begin
+  aForm.ckConexaoBD.Checked := true;
+  aForm.Refresh;
+
+  DM.quScriptCategorias.ExecSQL;
+  aForm.ckCategoriaBD.Checked := true;
+  aForm.Refresh;
+  Sleep(200);
+
+  DM.quScriptProdutos.ExecSQL;
+  aForm.ckProdutoBD.Checked := true;
+  aForm.Refresh;
+  sleep(200);
+
+  DM.quScriptClientes.ExecSQL;
+  aForm.ckClienteBD.Checked := true;
+  aForm.Refresh;
+  Sleep(200);
+
+  dm.quScriptVendas.ExecSQL;
+  aForm.ckVendaBD.Checked := true;
+  aForm.Refresh;
+  Sleep(200);
+
+  dm.quScripItensVendas.ExecSQL;
+  aForm.ckItensVendasBD.Checked := true;
+  aForm.Refresh;
+  Sleep(200);
+end;
+
 procedure TfPrincipal.Cliente1Click(Sender: TObject);
 begin
   CriarForm(TfCadCliente, fCadCliente, 'TfCadCliente')
@@ -92,6 +126,17 @@ end;
 procedure TfPrincipal.Produto1Click(Sender: TObject);
 begin
   CriarForm(TfcadProduto, fcadProduto, 'TfcadProduto')
+end;
+
+procedure TfPrincipal.FormCreate(Sender: TObject);
+begin
+  fAtualizarDB := TfAtualizarDB.Create(self);
+  fAtualizarDB.Show;
+  fAtualizarDB.Refresh;
+  //Application.ProcessMessages;
+  atualizarBancoDados(fAtualizarDB);
+  fAtualizarDB.Free;
+
 end;
 
 end.

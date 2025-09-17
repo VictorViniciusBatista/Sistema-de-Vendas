@@ -152,6 +152,10 @@
             <Form>fcadProduto</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="src\modules\uAtualizarDB.pas">
+            <Form>fAtualizarDB</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

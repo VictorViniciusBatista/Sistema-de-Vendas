@@ -1,0 +1,33 @@
+unit uAtualizarDB;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage;
+
+type
+  TfAtualizarDB = class(TForm)
+    pnlFundo: TPanel;
+    pnlFrente: TPanel;
+    imgBD: TImage;
+    Label1: TLabel;
+    ckConexaoBD: TCheckBox;
+    ckCategoriaBD: TCheckBox;
+    ckProdutoBD: TCheckBox;
+    ckClienteBD: TCheckBox;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  fAtualizarDB: TfAtualizarDB;
+
+implementation
+
+{$R *.dfm}
+
+end.

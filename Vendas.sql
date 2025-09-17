@@ -94,7 +94,7 @@ insert into produtos (nome, descricao, valor, quantidade, idCategoria) values
 select * from produtos
 select * from categoria
 
-drop table produtos 
+--drop table produtos 
 
 select p.id,
 	   p.nome,
@@ -105,3 +105,38 @@ select p.id,
 	   c.descricao
 from produtos as p 
 	left join categoria as c on c.id = p.idCategoria
+
+-- se a tabela vendas retonar sem nenhum dado, ele vai criar a tabela 
+if OBJECT_ID ('vendas') is null 
+begin
+create table vendas
+(
+id int primary key identity (1,1), 
+clienteId int not null,
+dataVenda datetime default getdate(),
+totalVenda decimal (18,5) default 0.00000
+);
+end;
+
+if OBJECT_ID ('vendaItens') is null
+begin
+create table vendasItens 
+(
+id int primary key identity (1,1),
+vendasId int not null, 
+produtoId int not null, 
+valorUnitario decimal (18,5) default 0.00000,
+quantidade decimal (18,5) default 0.00000,
+totalProduto decimal (18,5) default 0.00000
+)
+end; 
+
+
+
+--drop table vendasItens
+
+select * from vendasItens 
+Select * from vendas
+
+-- verifica se essa tabeça existe, retornando o id
+select OBJECT_ID ('vendasItens')

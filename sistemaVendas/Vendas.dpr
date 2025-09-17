@@ -9,15 +9,15 @@ uses
   uEnum in 'src\modules\uEnum.pas',
   cCadCategoria in 'src\view\cCadCategoria.pas',
   uCadastroCliente in 'src\view\uCadastroCliente.pas' {fCadCliente},
-  uCadProduto in 'src\view\uCadProduto.pas' {fcadProduto};
+  uCadProduto in 'src\view\uCadProduto.pas' {fcadProduto},
+  uAtualizarDB in 'src\modules\uAtualizarDB.pas' {fAtualizarDB};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TfPrincipal, fPrincipal);
   Application.CreateForm(TDM, DM);
-  Application.CreateForm(TfcadProduto, fcadProduto);
+  Application.CreateForm(TfPrincipal, fPrincipal);
   Application.Run;
 end.
