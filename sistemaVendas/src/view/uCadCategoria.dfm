@@ -5,7 +5,6 @@ inherited fCadCategoria: TfCadCategoria
   StyleElements = [seFont, seClient, seBorder]
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitTop = -73
   ExplicitWidth = 1170
   ExplicitHeight = 675
   TextHeight = 15

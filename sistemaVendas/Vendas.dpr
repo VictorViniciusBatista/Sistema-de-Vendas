@@ -10,7 +10,9 @@ uses
   cCadCategoria in 'src\view\cCadCategoria.pas',
   uCadastroCliente in 'src\view\uCadastroCliente.pas' {fCadCliente},
   uCadProduto in 'src\view\uCadProduto.pas' {fcadProduto},
-  uAtualizarDB in 'src\modules\uAtualizarDB.pas' {fAtualizarDB};
+  uAtualizarDB in 'src\modules\uAtualizarDB.pas' {fAtualizarDB},
+  uDMVendas in 'src\modules\uDMVendas.pas' {DMsvendas: TDataModule},
+  uProVenda in 'src\view\uProVenda.pas' {fProVenda};
 
 {$R *.res}
 
@@ -19,5 +21,7 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TfPrincipal, fPrincipal);
+  Application.CreateForm(TDMsvendas, DMsvendas);
+  Application.CreateForm(TfProVenda, fProVenda);
   Application.Run;
 end.

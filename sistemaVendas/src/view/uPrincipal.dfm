@@ -62,6 +62,7 @@ object fPrincipal: TfPrincipal
       Caption = 'Movimenta'#231#227'o'
       object Vendas1: TMenuItem
         Caption = 'Vendas'
+        OnClick = Vendas1Click
       end
     end
     object Movimentao2: TMenuItem

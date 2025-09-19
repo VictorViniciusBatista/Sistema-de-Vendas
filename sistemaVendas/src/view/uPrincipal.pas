@@ -31,6 +31,7 @@ type
     procedure Cliente1Click(Sender: TObject);
     procedure Produto1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Vendas1Click(Sender: TObject);
 
   private
     procedure CriarForm(TFormulario: TComponentClass; Formulario: TForm; NameForm: String);
@@ -47,7 +48,7 @@ implementation
 
 {$R *.dfm}
 
-uses uCadCategoria, uCadastroCliente, uCadProduto, uDM;
+uses uCadCategoria, uCadastroCliente, uCadProduto, uDM, uProVenda;
 
  //Criar tela de cadastro de clientes
 procedure TfPrincipal.atualizarBancoDados(aForm: TfAtualizarDB);
@@ -126,6 +127,11 @@ end;
 procedure TfPrincipal.Produto1Click(Sender: TObject);
 begin
   CriarForm(TfcadProduto, fcadProduto, 'TfcadProduto')
+end;
+
+procedure TfPrincipal.Vendas1Click(Sender: TObject);
+begin
+  CriarForm(TfProVenda, fProVenda, 'TfProVenda');
 end;
 
 procedure TfPrincipal.FormCreate(Sender: TObject);

@@ -205,8 +205,10 @@ var
   filtro: string;
   I: integer;
   totalEquipamentos: integer;
+  ganhos : real;
 begin
   filtro := '';
+  ganhos := 0;
 
  if lblIndice.Caption = 'Descrição' then
  begin
@@ -238,7 +240,6 @@ begin
 
     //trazer o total de equipamentos
     StatusBar1.Panels[1].Text := IntToStr(adoCategoria.RecordCount);
-
   end;
 end;
 

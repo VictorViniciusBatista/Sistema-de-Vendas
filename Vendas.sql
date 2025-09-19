@@ -62,9 +62,6 @@ insert into clientes (nome, endereco, cidade, bairro, estado, cep, telefone, ema
 'Sonia', 'Rua azomar batista de carvalho', 'Sorocaba', 'Jardim Siriema', 'SP', '18075778', '15 991642121', 'sonia@henriplast', '23/11/1965'
 ); 
 
-
-
-
 update clientes set email = 'vitor.ti@henriplast.com.br' where id = '1'
 
 select * from clientes where nome like '%v%'
@@ -118,7 +115,9 @@ totalVenda decimal (18,5) default 0.00000
 );
 end;
 
-if OBJECT_ID ('vendaItens') is null
+drop table vendasItens
+
+if OBJECT_ID ('vendasItens') is null
 begin
 create table vendasItens 
 (
@@ -131,8 +130,6 @@ totalProduto decimal (18,5) default 0.00000
 )
 end; 
 
-
-
 --drop table vendasItens
 
 select * from vendasItens 
@@ -140,3 +137,18 @@ Select * from vendas
 
 -- verifica se essa tabeça existe, retornando o id
 select OBJECT_ID ('vendasItens')
+
+if OBJECT_ID ('categoria') is null
+begin
+create table vendasTemporaria 
+(
+id int primary key identity(1,1),
+nome varchar (100)
+)
+end
+
+select vendas.id, vendas.clienteId, clientes.nome, vendas.dataVenda, vendas.totalVenda
+from vendas
+inner join clientes 
+on clientes.id = vendas.id
+

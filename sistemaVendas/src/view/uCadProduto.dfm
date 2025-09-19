@@ -174,9 +174,9 @@ inherited fcadProduto: TfcadProduto
         Width = 91
         Height = 23
         Constraints.MaxHeight = 30
-        EditLabel.Width = 39
+        EditLabel.Width = 95
         EditLabel.Height = 15
-        EditLabel.Caption = 'C'#243'digo'
+        EditLabel.Caption = 'N'#250'mero da venda'
         Enabled = False
         MaxLength = 60
         TabOrder = 0

@@ -68,6 +68,7 @@ inherited fCadCliente: TfCadCliente
   inherited pgPrincipal: TPageControl
     Width = 966
     Height = 354
+    ActivePage = tabManutencao
     ExplicitWidth = 966
     ExplicitHeight = 354
     inherited tabListagem: TTabSheet
