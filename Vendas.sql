@@ -1,5 +1,4 @@
 create database vendasUdemy
-
 use vendasUdemy
 
 create table vendasTemporaria 
@@ -50,7 +49,6 @@ insert into clientes (nome, endereco, cidade, bairro, estado, cep, telefone, ema
 (
 'Victor Vinicius dos Santos Batista', 'Rua azomar batista de carvalho', 'Sorocaba', 'Jardim Siriema', 'SP', '18075778', '15 991642121', 'vitor.ti@henriplast', '01/06/1998'
 ); 
-
 
 insert into clientes (nome, endereco, cidade, bairro, estado, cep, telefone, email, dataNascimento) values 
 (
@@ -150,5 +148,30 @@ end
 select vendas.id, vendas.clienteId, clientes.nome, vendas.dataVenda, vendas.totalVenda
 from vendas
 inner join clientes 
-on clientes.id = vendas.id
+on clientes.id = vendas.clienteId
 
+select vendas.id, vendas.clienteId, clientes.nome, vendas.dataVenda, vendas.totalVenda
+from vendas
+inner join clientes 
+on clientes.id = vendas.clienteId 
+where vendas.id = 1
+
+select vendas.id, vendas.clienteId, clientes.nome, vendas.dataVenda, vendas.totalVenda
+from vendas
+inner join clientes 
+on clientes.id = vendas.clienteId 
+where clientes.nome like '%vic%'
+
+select vendas.id, vendas.clienteId, clientes.nome, vendas.dataVenda, vendas.totalVenda
+from vendas
+inner join clientes 
+on clientes.id = vendas.clienteId 
+where vendas.totalVenda = 10
+
+
+select * from vendas
+select * from clientes
+
+insert into vendas (clienteId, dataVenda, totalVenda) values (1,'19-09-2025', '10.0'), (1,'18-09-2025', '10.0'), (2, '18-09-2025', '75.0'), (2, '19-09-2025', '120.0')
+
+insert into vendas (clienteId, dataVenda, totalVenda) values (1, '19-09-2025', '10.50')

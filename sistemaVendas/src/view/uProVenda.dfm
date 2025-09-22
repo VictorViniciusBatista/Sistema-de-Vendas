@@ -1,8 +1,13 @@
 inherited fProVenda: TfProVenda
   Caption = 'Vendas'
+  ClientHeight = 648
   StyleElements = [seFont, seClient, seBorder]
+  ExplicitLeft = 3
+  ExplicitTop = 3
+  ExplicitHeight = 648
   TextHeight = 15
   inherited pnlBotoes: TPanel
+    Top = 558
     StyleElements = [seFont, seClient, seBorder]
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
@@ -51,10 +56,13 @@ inherited fProVenda: TfProVenda
     end
   end
   inherited pgPrincipal: TPageControl
+    Height = 558
     ActivePage = tabManutencao
     inherited tabListagem: TTabSheet
+      ExplicitHeight = 528
       inherited pnlBotoesListagem: TPanel
         StyleElements = [seFont, seClient, seBorder]
+        ExplicitTop = -6
         inherited pnlEspaco9: TPanel
           StyleElements = [seFont, seClient, seBorder]
         end
@@ -99,6 +107,7 @@ inherited fProVenda: TfProVenda
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitHeight = 528
       object Categoria: TLabel
         Left = 140
         Top = 16
@@ -152,7 +161,7 @@ inherited fProVenda: TfProVenda
       end
       object pnlFundo: TPanel
         Left = 0
-        Top = 61
+        Top = 52
         Width = 1100
         Height = 476
         Align = alBottom
@@ -160,8 +169,7 @@ inherited fProVenda: TfProVenda
         Color = clWhite
         ParentBackground = False
         TabOrder = 3
-        ExplicitLeft = 5
-        ExplicitTop = 59
+        ExplicitTop = 61
         object pnltopo: TPanel
           Left = 0
           Top = 0
