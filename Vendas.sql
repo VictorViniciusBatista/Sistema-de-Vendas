@@ -57,7 +57,7 @@ insert into clientes (nome, endereco, cidade, bairro, estado, cep, telefone, ema
 
 insert into clientes (nome, endereco, cidade, bairro, estado, cep, telefone, email, dataNascimento) values 
 (
-'Sonia', 'Rua azomar batista de carvalho', 'Sorocaba', 'Jardim Siriema', 'SP', '18075778', '15 991642121', 'sonia@henriplast', '23/11/1965'
+'Teste12', 'Rua azomar batista de carvalho', 'Sorocaba', 'Jardim Siriema', 'SP', '18075778', '15 991642121', 'teste@henriplast', '23/11/1965'
 ); 
 
 update clientes set email = 'vitor.ti@henriplast.com.br' where id = '1'
@@ -113,7 +113,7 @@ totalVenda decimal (18,5) default 0.00000
 );
 end;
 
-drop table vendasItens
+--drop table vendasItens
 
 if OBJECT_ID ('vendasItens') is null
 begin
@@ -171,7 +171,21 @@ where vendas.totalVenda = 10
 
 select * from vendas
 select * from clientes
+select * from produtos
 
 insert into vendas (clienteId, dataVenda, totalVenda) values (1,'19-09-2025', '10.0'), (1,'18-09-2025', '10.0'), (2, '18-09-2025', '75.0'), (2, '19-09-2025', '120.0')
 
-insert into vendas (clienteId, dataVenda, totalVenda) values (1, '19-09-2025', '10.50')
+insert into vendas (clienteId, dataVenda, totalVenda) values (15, '19-09-2025', '10.50')
+
+select * from produtos
+
+update produtos set nome = 'Fone de ouvido - com fio' where id = 1
+
+update produtos set nome = 'Fone de ouvido - sem fio' where id = 2
+
+update produtos set nome = 'Fone de ouvido - Gamer' where id = 3
+
+update produtos set nome = 'Alcool - Isoprobilico 1Lt' where id = 5
+
+update produtos set nome = 'Notebook - Inspiron 15 3250' where id = 8
+

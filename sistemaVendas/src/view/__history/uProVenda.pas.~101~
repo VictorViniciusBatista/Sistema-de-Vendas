@@ -1,0 +1,237 @@
+unit uProVenda;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, System.Actions,
+  Vcl.ActnList, System.ImageList, Vcl.ImgList, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.Buttons, Vcl.DBCtrls, Vcl.ExtCtrls,
+  Data.Win.ADODB, uDM,  uDMVendas, RxToolEdit, RxCurrEdit;
+
+type
+  TfProVenda = class(TfTelaHeranca)
+    adoLista: TADOQuery;
+    dtListagem: TDataSource;
+    StatusBar1: TStatusBar;
+    edtVendasId: TLabeledEdit;
+    lkCliente: TDBLookupComboBox;
+    Categoria: TLabel;
+    edtDataVenda: TDateEdit;
+    Label2: TLabel;
+    pnlFundo: TPanel;
+    pnltopo: TPanel;
+    pnlBaixo: TPanel;
+    lblValor: TLabel;
+    edtValor: TCurrencyEdit;
+    DBGrid1: TDBGrid;
+    lkpProduto: TDBLookupComboBox;
+    Label1: TLabel;
+    edtValorUnitario: TCurrencyEdit;
+    edtQuantidade: TCurrencyEdit;
+    edtTotalProduto: TCurrencyEdit;
+    lblValorUnitario: TLabel;
+    lblQuantidade: TLabel;
+    lblTotalProduto: TLabel;
+    btnAdicionar: TBitBtn;
+    btnRemover: TBitBtn;
+    procedure FormShow(Sender: TObject);
+    procedure dbgListagemTitleClick(Column: TColumn);
+    procedure btnPesquisarClick(Sender: TObject);
+    procedure edtPesquisarKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure btnApagarClick(Sender: TObject);
+  private
+    procedure pegaDados;
+    procedure ExibirLabelIndice(Campo: String; aLabel: TLabel);
+    function RetornaCampoTraduzido(Campo: String): String;
+    var i : string;
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  fProVenda: TfProVenda;
+
+implementation
+
+{$R *.dfm}
+
+
+{ TfProVenda }
+
+
+
+procedure TfProVenda.FormShow(Sender: TObject);
+begin
+  lblIndice.Caption:= 'Nome';
+  pegaDados;
+  inherited;
+end;
+
+//Pega dados
+{$region 'Configurações da grid - resposável por trazer dados a grid, pra pesquisar, alinhar'}
+procedure TfProVenda.pegaDados;
+var
+  filtro: string;
+  I: integer;
+  ganhos : real;
+begin
+  filtro := '';
+  ganhos := 0;
+
+  if lblIndice.Caption = 'ID'  then
+  begin
+    if edtPesquisar.Text <> '' then
+    filtro := ' where vendas.id = ' + QuotedStr(edtPesquisar.Text);
+  end
+  else if lblIndice.Caption = 'ID Cliente' then
+  begin
+    if edtPesquisar.Text <> '' then
+    filtro := ' where vendas.clienteId = ' + QuotedStr(edtPesquisar.Text);
+  end
+  else if lblIndice.Caption = 'Nome' then
+  begin
+    if edtPesquisar.Text <> '' then
+    filtro := ' where clientes.nome like ' + QuotedStr('%' + edtPesquisar.Text + '%');
+  end
+  else if lblIndice.Caption = 'Data da Venda'  then
+  begin
+    if edtPesquisar.Text <> '' then
+    filtro := ' where vendas.dataVenda like ' + QuotedStr('%' +edtPesquisar.Text+'%')
+  end
+  else if lblIndice.Caption = 'Total de vendas' then
+  begin
+    if edtPesquisar.Text <> '' then
+    filtro := ' where vendas.totalVenda = ' + QuotedStr(edtPesquisar.Text);
+  end;
+
+  with adoLista do
+  begin
+    close;
+    sql.Text := 'select ' +
+                'vendas.id, '+
+                'vendas.clienteId, '+
+                'clientes.nome, '+
+                'vendas.dataVenda, '+
+                'vendas.totalVenda ' +
+                'from vendas ' +
+                'inner join clientes '+
+                'on clientes.id = vendas.clienteId ' + filtro;
+   open;
+   FieldByName('id').DisplayLabel := 'ID';
+   FieldByName('id').DisplayWidth := 5;
+   FieldByName('clienteId').DisplayLabel := 'ID Cliente';
+   FieldByName('clienteId').DisplayWidth := 10;
+   FieldByName('nome').DisplayLabel := 'Nome';
+   FieldByName('nome').DisplayWidth := 40;
+   FieldByName('dataVenda').DisplayLabel := 'Data da Venda';
+   FieldByName('dataVenda').DisplayWidth := 15;
+   FieldByName('totalVenda').DisplayLabel := 'Total de vendas';
+   FieldByName('totalVenda').DisplayWidth := 20;
+
+   for I := 0 to dbgListagem.Columns.Count -1 do
+   begin
+     dbgListagem.Columns[i].Alignment := taCenter;
+     dbgListagem.Columns[i].Title.Alignment := taCenter;
+   end;
+
+   while not eof do
+   begin
+     ganhos := ganhos + FieldByName('totalVenda').AsFloat;
+     next;
+   end;
+
+   StatusBar1.Panels[1].Text := 'R$ ' + FormatFloat('#.##', ganhos);
+  end;
+end;
+{$endregion}
+
+//Parte responsável por configuração da grid
+{$region 'Configurações da grid - resposável por ordenar e realizar a consulta por id ou nome e atualizar'}
+
+procedure TfProVenda.btnApagarClick(Sender: TObject);
+begin
+
+
+  if Application.MessageBox(PChar('Deseja excluir o item '+#13+#13+ 'ID: ' + adoLista.FieldByName('id').AsString + #13 + ' nome: ' + adoLista.FieldByName('nome').AsString + '?'), 'Atenção', MB_YESNO or MB_ICONQUESTION) = mrNo then
+  abort;
+  {
+  try
+    with
+
+  except
+  on e: exception do
+  begin
+    ShowMessage(e.Message);
+  end;
+
+  end;
+  }
+
+  with DM.QU do
+  begin
+    close;
+    sql.Text := 'delete from vendas where id = ' + adoLista.FieldByName('id').AsString;
+    ExecSQL;
+  end;
+  inherited;
+  pegaDados;
+end;
+
+procedure TfProVenda.btnPesquisarClick(Sender: TObject);
+begin
+  inherited;
+  pegaDados;
+end;
+
+procedure TfProVenda.dbgListagemTitleClick(Column: TColumn);
+begin
+  inherited;
+  //IndiceAtual := Column.Field.FieldName;
+
+  // Verifica se o campo é válido
+  if not Assigned(Column.Field) then Exit;
+
+  // Alterna entre ASC e DESC
+  if SameText(Trim(adoLista.Sort), Column.Field.FieldName + ' ASC') then
+    adoLista.Sort := Column.Field.FieldName + ' DESC'
+  else
+    adoLista.Sort := Column.Field.FieldName + ' ASC';
+
+  // lblIndice.Caption := RetornaCampoTraduzido(Column.Field.FieldName);  trocou pela de baixo
+  ExibirLabelIndice(Column.Field.FieldName, lblIndice);
+end;
+
+procedure TfProVenda.ExibirLabelIndice(Campo: String; aLabel: TLabel);
+begin
+  aLabel.Caption := RetornaCampoTraduzido(Campo);
+end;
+
+// Responsável por verificar a coluna que eu cliquei para que o lbl fique com o mesmo titulo
+function TfProVenda.RetornaCampoTraduzido(Campo: String): String;
+var
+ i : integer;
+begin
+   for I := 0 to adoLista.Fields.Count -1 do
+  begin
+    if adoLista.Fields[i].FieldName = campo then
+    begin
+      Result := adoLista.Fields[i].DisplayLabel;
+      break;
+    end;
+
+  end;
+end;
+
+// Evento do campo digite sua pesquisa, depois de fazer a consulta e depois de tirar alguma informação do campo, a grid volta a aparecer todos os registros
+procedure TfProVenda.edtPesquisarKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  pegaDados;
+end;
+{$endregion}
+
+end.

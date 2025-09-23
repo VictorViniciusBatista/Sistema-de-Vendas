@@ -24,11 +24,23 @@ type
     pnlBaixo: TPanel;
     lblValor: TLabel;
     edtValor: TCurrencyEdit;
+    dbgListagem2: TDBGrid;
+    lkpProduto: TDBLookupComboBox;
+    Label1: TLabel;
+    edtValorUnitario: TCurrencyEdit;
+    edtQuantidade: TCurrencyEdit;
+    edtTotalProduto: TCurrencyEdit;
+    lblValorUnitario: TLabel;
+    lblQuantidade: TLabel;
+    lblTotalProduto: TLabel;
+    btnAdicionar: TBitBtn;
+    btnRemover: TBitBtn;
     procedure FormShow(Sender: TObject);
     procedure dbgListagemTitleClick(Column: TColumn);
     procedure btnPesquisarClick(Sender: TObject);
     procedure edtPesquisarKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure btnApagarClick(Sender: TObject);
   private
     procedure pegaDados;
     procedure ExibirLabelIndice(Campo: String; aLabel: TLabel);
@@ -138,6 +150,35 @@ end;
 
 //Parte responsável por configuração da grid
 {$region 'Configurações da grid - resposável por ordenar e realizar a consulta por id ou nome e atualizar'}
+
+procedure TfProVenda.btnApagarClick(Sender: TObject);
+begin
+
+
+  if Application.MessageBox(PChar('Deseja excluir o item '+#13+#13+ 'ID: ' + adoLista.FieldByName('id').AsString + #13 + ' nome: ' + adoLista.FieldByName('nome').AsString + '?'), 'Atenção', MB_YESNO or MB_ICONQUESTION) = mrNo then
+  abort;
+  {
+  try
+    with
+
+  except
+  on e: exception do
+  begin
+    ShowMessage(e.Message);
+  end;
+
+  end;
+  }
+
+  with DM.QU do
+  begin
+    close;
+    sql.Text := 'delete from vendas where id = ' + adoLista.FieldByName('id').AsString;
+    ExecSQL;
+  end;
+  inherited;
+  pegaDados;
+end;
 
 procedure TfProVenda.btnPesquisarClick(Sender: TObject);
 begin

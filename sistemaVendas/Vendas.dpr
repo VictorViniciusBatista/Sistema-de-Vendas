@@ -20,8 +20,7 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDM, DM);
-  Application.CreateForm(TfPrincipal, fPrincipal);
   Application.CreateForm(TDMsvendas, DMsvendas);
-  Application.CreateForm(TfProVenda, fProVenda);
+  Application.CreateForm(TfPrincipal, fPrincipal);
   Application.Run;
 end.
