@@ -56,7 +56,7 @@ uses uDM;
 
 { TfcadProduto }
 
-// Responsável por ordenar de forma alfabética as colunas, de forma crescente ou decrescente
+
 procedure TfcadProduto.btnAlterarClick(Sender: TObject);
 begin
   i := 'alterar';

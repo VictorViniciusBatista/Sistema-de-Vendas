@@ -189,3 +189,69 @@ update produtos set nome = 'Alcool - Isoprobilico 1Lt' where id = 5
 
 update produtos set nome = 'Notebook - Inspiron 15 3250' where id = 8
 
+
+
+select id, nome, quantidade, valor as 'valor Unitario', valorTotalProduto = valor * quantidade from produtos 
+select * from produtos
+select id as 'ID' from produtos
+
+select total = valor * quantidade from produtos
+
+select * from vendasItens
+select * from vendas
+select * from produtos
+
+
+select * from clientes
+
+insert into vendasItens (vendasId, produtoId, valorUnitario, quantidade, totalProduto) values 
+(
+1, 1, '80', 1, '80'
+)
+
+insert into vendasItens (vendasId, produtoId, valorUnitario, quantidade, totalProduto) values 
+(
+12, 1, '100', 2, '100'
+)
+
+select vendas.id, vendas.clienteId, clientes.nome, vendas.dataVenda, vendas.totalVenda
+from vendas
+inner join clientes 
+on clientes.id = vendas.clienteId 
+
+
+
+select * from vendasItens
+select * from vendas
+
+
+insert into vendas (clienteId, dataVenda, totalVenda) values (15, '19-09-2025', '10.50')
+
+insert into vendasItens (vendasId, produtoId, valorUnitario, quantidade, totalProduto) values 
+(
+14, 1, '100', 2, '200'
+)
+
+update vendasItens set totalProduto = '200' where id = 3
+
+
+select * from produtos
+
+--- Limpar tabelas conteudo 
+
+delete from vendasItens 
+DBCC CHECKIDENT('vendasItens', RESED, 0)
+
+delete from vendas 
+DBCC CHECKIDENT('vendas', RESED, 0)
+
+delete from produtos
+DBCC CHECKIDENT('produtos', RESED, 0)
+
+delete from clientes 
+DBCC CHECKIDENT('clientes', RESED, 0)
+
+delete from categoria 
+DBCC CHECKIDENT('categoria', RESED, 0)
+
+----

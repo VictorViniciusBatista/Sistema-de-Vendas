@@ -60,7 +60,7 @@ object DMsvendas: TDMsvendas
     Aggregates = <>
     FieldDefs = <
       item
-        Name = 'pordutoId'
+        Name = 'produtoId'
         DataType = ftInteger
       end
       item
@@ -85,10 +85,9 @@ object DMsvendas: TDMsvendas
     StoreDefs = True
     Left = 288
     Top = 56
-    object cdsItensVendaspordutoId: TIntegerField
-      Alignment = taCenter
+    object cdsItensVendasprodutoId: TIntegerField
       DisplayLabel = 'C'#243'digo'
-      FieldName = 'pordutoId'
+      FieldName = 'produtoId'
     end
     object cdsItensVendasNomeProduto: TStringField
       DisplayLabel = 'Nome do Produto'

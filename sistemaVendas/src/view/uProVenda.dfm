@@ -9,6 +9,7 @@ inherited fProVenda: TfProVenda
     StyleElements = [seFont, seClient, seBorder]
     ExplicitTop = 558
     inherited btnNavigator: TDBNavigator
+      DataSource = dtListagem
       Hints.Strings = ()
     end
     inherited pnlNovo: TPanel
@@ -59,7 +60,6 @@ inherited fProVenda: TfProVenda
   end
   inherited pgPrincipal: TPageControl
     Height = 558
-    ExplicitTop = -6
     ExplicitHeight = 558
     inherited tabListagem: TTabSheet
       ExplicitHeight = 528
@@ -220,6 +220,7 @@ inherited fProVenda: TfProVenda
             ListField = 'nome'
             ListSource = DMsvendas.dtProdutos
             TabOrder = 0
+            OnExit = lkpProdutoExit
           end
           object edtValorUnitario: TCurrencyEdit
             Left = 278
@@ -236,6 +237,8 @@ inherited fProVenda: TfProVenda
             Height = 23
             DisplayFormat = ' ,0.00;- ,0.00'
             TabOrder = 3
+            OnEnter = edtQuantidadeEnter
+            OnExit = edtQuantidadeExit
           end
           object edtTotalProduto: TCurrencyEdit
             Left = 583
@@ -280,6 +283,7 @@ inherited fProVenda: TfProVenda
               17BF6F17FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
               00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
             TabOrder = 5
+            OnClick = btnAdicionarClick
           end
           object btnRemover: TBitBtn
             Left = 830
@@ -328,13 +332,13 @@ inherited fProVenda: TfProVenda
           ParentBackground = False
           TabOrder = 1
           object lblValor: TLabel
-            Left = 864
+            Left = 811
             Top = 25
-            Width = 26
+            Width = 77
             Height = 15
-            Caption = 'Valor'
+            Caption = 'Total da venda'
           end
-          object edtValor: TCurrencyEdit
+          object edtValorTotal: TCurrencyEdit
             Left = 901
             Top = 21
             Width = 108
@@ -343,14 +347,13 @@ inherited fProVenda: TfProVenda
             TabOrder = 0
           end
         end
-        object dbgListagem2: TDBGrid
+        object dbgListagem1: TDBGrid
           Left = 0
           Top = 73
           Width = 1100
           Height = 343
           Align = alClient
           DataSource = DMsvendas.dtItensVendas
-          Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
           TabOrder = 2
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -359,40 +362,37 @@ inherited fProVenda: TfProVenda
           TitleFont.Style = []
           Columns = <
             item
-              BiDiMode = bdRightToLeftNoAlign
               Expanded = False
-              FieldName = 'pordutoId'
+              FieldName = 'produtoId'
               Title.Alignment = taCenter
-              Width = 111
               Visible = True
             end
             item
-              Alignment = taCenter
               Expanded = False
               FieldName = 'NomeProduto'
               Title.Alignment = taCenter
-              Width = 383
+              Width = 256
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Quantidade'
               Title.Alignment = taCenter
-              Width = 90
+              Width = 91
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'valorUnitario'
               Title.Alignment = taCenter
-              Width = 91
+              Width = 100
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'valorTotalProduto'
               Title.Alignment = taCenter
-              Width = 112
+              Width = 133
               Visible = True
             end>
         end

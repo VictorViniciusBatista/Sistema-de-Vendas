@@ -15,6 +15,8 @@ inherited fcadProduto: TfcadProduto
     inherited btnNavigator: TDBNavigator
       DataSource = dtProduto
       Hints.Strings = ()
+      ExplicitLeft = 592
+      ExplicitTop = 2
     end
     inherited pnlNovo: TPanel
       StyleElements = [seFont, seClient, seBorder]
